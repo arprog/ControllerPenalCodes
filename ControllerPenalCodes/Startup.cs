@@ -2,6 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using ControllerPenalCodes.Interfaces;
+using ControllerPenalCodes.Models.Entities;
+using ControllerPenalCodes.Repositories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -26,6 +29,7 @@ namespace ControllerPenalCodes
 
 		public void ConfigureServices(IServiceCollection services)
 		{
+			AddScopeds(services);
 			services.AddDbContext<DBContext>(options =>
 			{
 				options.UseMySql(Configuration.GetConnectionString("MySqlDB"), new MySqlServerVersion(new Version(5, 0, 0)));
@@ -56,6 +60,13 @@ namespace ControllerPenalCodes
 			{
 				endpoints.MapControllers();
 			});
+		}
+
+		private void AddScopeds(IServiceCollection services)
+		{
+			services.AddScoped<IRepository<CriminalCode>, CriminalCodeRepository>();
+			services.AddScoped<IRepository<Status>, StatusRepository>();
+			services.AddScoped<IRepository<User>, UserRepository>();
 		}
 	}
 }
