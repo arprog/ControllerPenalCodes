@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace ControllerPenalCodes.Interfaces
+namespace ControllerPenalCodes.Models.Interfaces
 {
 	public interface IRepository<TEntity> where TEntity : class
 	{
