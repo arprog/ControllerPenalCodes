@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using ControllerPenalCodes.Models.Interfaces;
 using ControllerPenalCodes.Models.Entities;
 using Microsoft.EntityFrameworkCore;
+using ControllerPenalCodes.Models.Interfaces.RepositoryInterfaces;
 
 namespace ControllerPenalCodes.Repositories
 {
-	public class UserRepository : IRepository<User>
+	public class UserRepository : IUserRepository
 	{
 		private readonly DBContext _dbContext;
 
@@ -16,7 +16,7 @@ namespace ControllerPenalCodes.Repositories
 			_dbContext = dbContext;
 		}
 
-		public async void Add(User user)
+		public async Task Add(User user)
 		{
 			await _dbContext.Users
 				.AddRangeAsync(user);
@@ -32,6 +32,13 @@ namespace ControllerPenalCodes.Repositories
 				.ToListAsync();
 		}
 
+		public async Task<User> Get(string username, string userPassword)
+		{
+			return await _dbContext.Users
+				.AsNoTracking()
+				.FirstOrDefaultAsync(user => user.UserName.Equals(username) && user.Password.Equals(userPassword));
+		}
+
 		public async Task<User> Get(Guid userId)
 		{
 			return await _dbContext.Users
@@ -39,7 +46,14 @@ namespace ControllerPenalCodes.Repositories
 				.FirstOrDefaultAsync(user => user.Id.Equals(userId));
 		}
 
-		public async void Update(User user)
+		public async Task<User> Get(string username)
+		{
+			return await _dbContext.Users
+				.AsNoTracking()
+				.FirstOrDefaultAsync(user => user.UserName.Equals(username));
+		}
+
+		public async Task Update(User user)
 		{
 			_dbContext.Users
 				.Update(user);
@@ -48,7 +62,7 @@ namespace ControllerPenalCodes.Repositories
 				.SaveChangesAsync();
 		}
 
-		public async void Remove(User user)
+		public async Task Remove(User user)
 		{
 			_dbContext.Users
 				.Remove(user);

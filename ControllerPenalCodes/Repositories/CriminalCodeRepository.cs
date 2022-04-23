@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using ControllerPenalCodes.Models.Interfaces;
+using ControllerPenalCodes.Models.Interfaces.RepositoryInterfaces;
 using ControllerPenalCodes.Models.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace ControllerPenalCodes.Repositories
 {
-	public class CriminalCodeRepository : IRepository<CriminalCode>
+	public class CriminalCodeRepository : ICriminalCodeRepository
 	{
 		private readonly DBContext _dbContext;
 
@@ -16,7 +16,7 @@ namespace ControllerPenalCodes.Repositories
 			_dbContext = dbContext;
 		}
 
-		public async void Add(CriminalCode criminalCode)
+		public async Task Add(CriminalCode criminalCode)
 		{
 			await _dbContext.CriminalCodes
 				.AddRangeAsync(criminalCode);
@@ -29,6 +29,9 @@ namespace ControllerPenalCodes.Repositories
 		{
 			return await _dbContext.CriminalCodes
 				.AsNoTracking()
+				.Include(criminalCode => criminalCode.Status)
+				.Include(criminalCode => criminalCode.CreateUser)
+				.Include(criminalCode => criminalCode.UpdateUser)
 				.ToListAsync();
 		}
 
@@ -36,10 +39,23 @@ namespace ControllerPenalCodes.Repositories
 		{
 			return await _dbContext.CriminalCodes
 				.AsNoTracking()
+				.Include(criminalCode => criminalCode.Status)
+				.Include(criminalCode => criminalCode.CreateUser)
+				.Include(criminalCode => criminalCode.UpdateUser)
 				.FirstOrDefaultAsync(criminalCode => criminalCode.Id.Equals(criminalCodeId));
 		}
-		
-		public async void Update(CriminalCode criminalCode)
+
+		public async Task<CriminalCode> Get(string criminalCodeName)
+		{
+			return await _dbContext.CriminalCodes
+				.AsNoTracking()
+				.Include(criminalCode => criminalCode.Status)
+				.Include(criminalCode => criminalCode.CreateUser)
+				.Include(criminalCode => criminalCode.UpdateUser)
+				.FirstOrDefaultAsync(criminalCode => criminalCode.Name.Equals(criminalCodeName));
+		}
+
+		public async Task Update(CriminalCode criminalCode)
 		{
 			_dbContext.CriminalCodes
 				.Update(criminalCode);
@@ -48,7 +64,7 @@ namespace ControllerPenalCodes.Repositories
 				.SaveChangesAsync();
 		}
 
-		public async void Remove(CriminalCode criminalCode)
+		public async Task Remove(CriminalCode criminalCode)
 		{
 			_dbContext.CriminalCodes
 				.Remove(criminalCode);

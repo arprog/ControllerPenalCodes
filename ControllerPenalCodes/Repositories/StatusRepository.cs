@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using ControllerPenalCodes.Models.Interfaces;
 using ControllerPenalCodes.Models.Entities;
 using Microsoft.EntityFrameworkCore;
+using ControllerPenalCodes.Models.Interfaces.RepositoryInterfaces;
 
 namespace ControllerPenalCodes.Repositories
 {
-	public class StatusRepository : IRepository<Status>
+	public class StatusRepository : IStatusRepository
 	{
 		private readonly DBContext _dbContext;
 
@@ -16,7 +16,7 @@ namespace ControllerPenalCodes.Repositories
 			_dbContext = dbContext;
 		}
 
-		public async void Add(Status status)
+		public async Task Add(Status status)
 		{
 			await _dbContext.Status
 				.AddRangeAsync(status);
@@ -39,7 +39,14 @@ namespace ControllerPenalCodes.Repositories
 				.FirstOrDefaultAsync(status => status.Id.Equals(statusId));
 		}
 
-		public async void Update(Status status)
+		public async Task<Status> Get(string statusName)
+		{
+			return await _dbContext.Status
+				.AsNoTracking()
+				.FirstOrDefaultAsync(status => status.Name.Equals(statusName));
+		}
+
+		public async Task Update(Status status)
 		{
 			_dbContext.Status
 				.Update(status);
@@ -48,7 +55,7 @@ namespace ControllerPenalCodes.Repositories
 				.SaveChangesAsync();
 		}
 
-		public async void Remove(Status status)
+		public async Task Remove(Status status)
 		{
 			_dbContext.Status
 				.Remove(status);
