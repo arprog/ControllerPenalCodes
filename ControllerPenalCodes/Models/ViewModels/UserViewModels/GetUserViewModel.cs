@@ -6,6 +6,6 @@ namespace ControllerPenalCodes.Models.ViewModels.UserViewModels
 	{
 		public Guid Id { get; set; }
 
-		public string UserName { get; set; }
+		public string Username { get; set; }
 	}
 }
