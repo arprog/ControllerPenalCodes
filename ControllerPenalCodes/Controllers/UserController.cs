@@ -2,7 +2,7 @@
 using System.Net;
 using System.Threading.Tasks;
 using ControllerPenalCodes.Interfaces.ServiceInterfaces;
-using ControllerPenalCodes.ViewModels.UserViewModels;
+using ControllerPenalCodes.Models.ViewModels.UserViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 

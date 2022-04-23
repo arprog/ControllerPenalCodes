@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using ControllerPenalCodes.Models.Entities;
-using ControllerPenalCodes.ViewModels.StatusViewModels;
+using ControllerPenalCodes.Models.ViewModels.StatusViewModels;
 
-namespace ControllerPenalCodes.Mappers
+namespace ControllerPenalCodes.Models.Mappers
 {
 	public class StatusMapper
 	{

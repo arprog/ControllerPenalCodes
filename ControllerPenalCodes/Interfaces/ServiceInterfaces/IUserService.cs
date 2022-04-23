@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using ControllerPenalCodes.Models.Entities;
-using ControllerPenalCodes.ViewModels.UserViewModels;
+using ControllerPenalCodes.Models.ViewModels.UserViewModels;
 using ControllerPenalCodes.Utils;
 
 namespace ControllerPenalCodes.Interfaces.ServiceInterfaces

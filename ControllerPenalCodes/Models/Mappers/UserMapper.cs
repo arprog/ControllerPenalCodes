@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using ControllerPenalCodes.Models.Entities;
-using ControllerPenalCodes.ViewModels.UserViewModels;
+using ControllerPenalCodes.Models.ViewModels.UserViewModels;
 
-namespace ControllerPenalCodes.Mappers
+namespace ControllerPenalCodes.Models.Mappers
 {
 	public class UserMapper
 	{

@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Threading.Tasks;
 using ControllerPenalCodes.Interfaces.ServiceInterfaces;
-using ControllerPenalCodes.ViewModels.CriminalCodeViewModels;
+using ControllerPenalCodes.Models.ViewModels.CriminalCodeViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 

@@ -1,4 +1,4 @@
-﻿namespace ControllerPenalCodes.ViewModels.LoginViewModels
+﻿namespace ControllerPenalCodes.Models.ViewModels.LoginViewModels
 {
 	public class TokenViewModel
 	{

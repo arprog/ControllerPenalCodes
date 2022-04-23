@@ -5,8 +5,8 @@ using System.Threading.Tasks;
 using ControllerPenalCodes.Models.Entities;
 using ControllerPenalCodes.Interfaces.RepositoryInterfaces;
 using ControllerPenalCodes.Interfaces.ServiceInterfaces;
-using ControllerPenalCodes.ViewModels.LoginViewModels;
-using ControllerPenalCodes.ViewModels.UserViewModels;
+using ControllerPenalCodes.Models.ViewModels.LoginViewModels;
+using ControllerPenalCodes.Models.ViewModels.UserViewModels;
 using ControllerPenalCodes.Utils;
 using Microsoft.IdentityModel.Tokens;
 

@@ -1,10 +1,13 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace ControllerPenalCodes.ViewModels.CriminalCodeViewModels
+namespace ControllerPenalCodes.Models.ViewModels.CriminalCodeViewModels
 {
-	public class CreateCriminalCodeViewModel
+	public class UpdateCriminalCodeViewModel
 	{
+		[Required]
+		public Guid Id { get; set; }
+
 		[Required(AllowEmptyStrings = false)]
 		[DisplayFormat(ConvertEmptyStringToNull = false)]
 		public string Name { get; set; }
@@ -21,5 +24,11 @@ namespace ControllerPenalCodes.ViewModels.CriminalCodeViewModels
 
 		[Required]
 		public Guid StatusId { get; set; }
+
+		[Required]
+		public DateTime CreateDate { get; set; }
+
+		[Required]
+		public Guid CreateUserId { get; set; }
 	}
 }

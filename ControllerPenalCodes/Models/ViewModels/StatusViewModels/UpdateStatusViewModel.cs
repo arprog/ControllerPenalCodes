@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace ControllerPenalCodes.ViewModels.StatusViewModels
+namespace ControllerPenalCodes.Models.ViewModels.StatusViewModels
 {
 	public class UpdateStatusViewModel
 	{

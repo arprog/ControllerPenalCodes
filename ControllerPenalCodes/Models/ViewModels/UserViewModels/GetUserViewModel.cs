@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace ControllerPenalCodes.ViewModels.UserViewModels
+namespace ControllerPenalCodes.Models.ViewModels.UserViewModels
 {
 	public class GetUserViewModel
 	{

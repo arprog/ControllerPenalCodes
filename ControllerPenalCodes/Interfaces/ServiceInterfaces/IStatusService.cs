@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using ControllerPenalCodes.Models.Entities;
-using ControllerPenalCodes.ViewModels.StatusViewModels;
+using ControllerPenalCodes.Models.ViewModels.StatusViewModels;
 using ControllerPenalCodes.Utils;
 
 namespace ControllerPenalCodes.Interfaces.ServiceInterfaces

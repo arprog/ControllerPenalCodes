@@ -1,7 +1,7 @@
 ﻿using System;
 using ControllerPenalCodes.Models.Entities;
 
-namespace ControllerPenalCodes.ViewModels.CriminalCodeViewModels
+namespace ControllerPenalCodes.Models.ViewModels.CriminalCodeViewModels
 {
 	public class GetCriminalCodeViewModel
 	{

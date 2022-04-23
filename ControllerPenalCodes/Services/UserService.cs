@@ -5,8 +5,8 @@ using System.Threading.Tasks;
 using ControllerPenalCodes.Models.Entities;
 using ControllerPenalCodes.Interfaces.RepositoryInterfaces;
 using ControllerPenalCodes.Interfaces.ServiceInterfaces;
-using ControllerPenalCodes.Mappers;
-using ControllerPenalCodes.ViewModels.UserViewModels;
+using ControllerPenalCodes.Models.Mappers;
+using ControllerPenalCodes.Models.ViewModels.UserViewModels;
 using ControllerPenalCodes.Utils;
 
 namespace ControllerPenalCodes.Services
