@@ -1,9 +1,9 @@
 ﻿using System.Threading.Tasks;
-using ControllerPenalCodes.Models.ViewModels.LoginViewModels;
-using ControllerPenalCodes.Models.ViewModels.UserViewModels;
+using ControllerPenalCodes.ViewModels.LoginViewModels;
+using ControllerPenalCodes.ViewModels.UserViewModels;
 using ControllerPenalCodes.Utils;
 
-namespace ControllerPenalCodes.Models.Interfaces.ServiceInterfaces
+namespace ControllerPenalCodes.Interfaces.ServiceInterfaces
 {
 	public interface ILoginService
 	{

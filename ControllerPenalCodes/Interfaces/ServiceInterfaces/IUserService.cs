@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using ControllerPenalCodes.Models.Entities;
-using ControllerPenalCodes.Models.ViewModels.UserViewModels;
+using ControllerPenalCodes.ViewModels.UserViewModels;
 using ControllerPenalCodes.Utils;
 
-namespace ControllerPenalCodes.Models.Interfaces.ServiceInterfaces
+namespace ControllerPenalCodes.Interfaces.ServiceInterfaces
 {
 	public interface IUserService
 	{

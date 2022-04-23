@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace ControllerPenalCodes.Models.ViewModels.UserViewModels
+namespace ControllerPenalCodes.ViewModels.UserViewModels
 {
 	public class CreateUserViewModel
 	{

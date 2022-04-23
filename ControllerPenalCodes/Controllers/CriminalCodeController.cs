@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
-using ControllerPenalCodes.Models.Interfaces.ServiceInterfaces;
-using ControllerPenalCodes.Models.ViewModels.CriminalCodeViewModels;
+using ControllerPenalCodes.Interfaces.ServiceInterfaces;
+using ControllerPenalCodes.ViewModels.CriminalCodeViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 

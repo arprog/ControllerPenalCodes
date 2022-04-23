@@ -3,10 +3,10 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using ControllerPenalCodes.Models.Entities;
-using ControllerPenalCodes.Models.Interfaces.RepositoryInterfaces;
-using ControllerPenalCodes.Models.Interfaces.ServiceInterfaces;
-using ControllerPenalCodes.Models.ViewModels.LoginViewModels;
-using ControllerPenalCodes.Models.ViewModels.UserViewModels;
+using ControllerPenalCodes.Interfaces.RepositoryInterfaces;
+using ControllerPenalCodes.Interfaces.ServiceInterfaces;
+using ControllerPenalCodes.ViewModels.LoginViewModels;
+using ControllerPenalCodes.ViewModels.UserViewModels;
 using ControllerPenalCodes.Utils;
 using Microsoft.IdentityModel.Tokens;
 

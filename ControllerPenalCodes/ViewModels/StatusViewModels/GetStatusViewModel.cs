@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace ControllerPenalCodes.Models.ViewModels.StatusViewModels
+namespace ControllerPenalCodes.ViewModels.StatusViewModels
 {
 	public class GetStatusViewModel
 	{

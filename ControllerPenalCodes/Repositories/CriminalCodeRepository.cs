@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using ControllerPenalCodes.Models.Interfaces.RepositoryInterfaces;
+using ControllerPenalCodes.Interfaces.RepositoryInterfaces;
 using ControllerPenalCodes.Models.Entities;
 using Microsoft.EntityFrameworkCore;
 

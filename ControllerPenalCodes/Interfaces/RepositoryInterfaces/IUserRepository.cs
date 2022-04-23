@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using ControllerPenalCodes.Models.Entities;
 
-namespace ControllerPenalCodes.Models.Interfaces.RepositoryInterfaces
+namespace ControllerPenalCodes.Interfaces.RepositoryInterfaces
 {
 	public interface IUserRepository
 	{

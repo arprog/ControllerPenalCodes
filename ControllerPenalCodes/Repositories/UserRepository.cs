@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using ControllerPenalCodes.Models.Entities;
 using Microsoft.EntityFrameworkCore;
-using ControllerPenalCodes.Models.Interfaces.RepositoryInterfaces;
+using ControllerPenalCodes.Interfaces.RepositoryInterfaces;
 
 namespace ControllerPenalCodes.Repositories
 {

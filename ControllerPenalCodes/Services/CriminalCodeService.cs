@@ -4,10 +4,10 @@ using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using ControllerPenalCodes.Models.Entities;
-using ControllerPenalCodes.Models.Interfaces.RepositoryInterfaces;
-using ControllerPenalCodes.Models.Interfaces.ServiceInterfaces;
-using ControllerPenalCodes.Models.Mappers;
-using ControllerPenalCodes.Models.ViewModels.CriminalCodeViewModels;
+using ControllerPenalCodes.Interfaces.RepositoryInterfaces;
+using ControllerPenalCodes.Interfaces.ServiceInterfaces;
+using ControllerPenalCodes.Mappers;
+using ControllerPenalCodes.ViewModels.CriminalCodeViewModels;
 using ControllerPenalCodes.Utils;
 
 namespace ControllerPenalCodes.Services

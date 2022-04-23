@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
-using ControllerPenalCodes.Models.Interfaces.ServiceInterfaces;
-using ControllerPenalCodes.Models.ViewModels.StatusViewModels;
+using ControllerPenalCodes.Interfaces.ServiceInterfaces;
+using ControllerPenalCodes.ViewModels.StatusViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
