@@ -1,20 +1,18 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using ControllerPenalCodes.Models.Interfaces;
-using ControllerPenalCodes.Models.Entities;
 using ControllerPenalCodes.Repositories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using ControllerPenalCodes.Services;
+using ControllerPenalCodes.Utils;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using Swashbuckle.AspNetCore.SwaggerGen;
+using ControllerPenalCodes.Models.Interfaces.RepositoryInterfaces;
+using ControllerPenalCodes.Models.Interfaces.ServiceInterfaces;
 
 namespace ControllerPenalCodes
 {
@@ -29,19 +27,21 @@ namespace ControllerPenalCodes
 
 		public void ConfigureServices(IServiceCollection services)
 		{
-			AddScopeds(services);
-			services.AddDbContext<DBContext>(options =>
-			{
-				options.UseMySql(Configuration.GetConnectionString("MySqlDB"), new MySqlServerVersion(new Version(5, 0, 0)));
-			});
 			services.AddControllers();
 			services.AddSwaggerGen(c =>
 			{
+				c.EnableAnnotations();
+
 				c.SwaggerDoc("v1", new OpenApiInfo { Title = "ControllerPenalCodes", Version = "v1" });
+
+				AddSwaggerConfigurationJwtBearer(c);
 			});
+			AddDatabaseConfiguration(services);
+			AddScopeds(services);
+			AddJwtBearerAuthentication(services);
 		}
 
-		public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+		public void Configure(IApplicationBuilder app, IWebHostEnvironment env, DBContext context)
 		{
 			if (env.IsDevelopment())
 			{
@@ -54,19 +54,97 @@ namespace ControllerPenalCodes
 
 			app.UseRouting();
 
+			app.UseAuthentication();
+
 			app.UseAuthorization();
 
 			app.UseEndpoints(endpoints =>
 			{
 				endpoints.MapControllers();
 			});
+
+			context.Database.Migrate();
+		}
+
+		private void AddDatabaseConfiguration(IServiceCollection services)
+		{
+			services.AddDbContext<DBContext>(options =>
+			{
+				var mySqlConnection = Configuration.GetConnectionString("MySqlDB");
+				options.UseMySql(mySqlConnection, ServerVersion.AutoDetect(mySqlConnection));
+			});
 		}
 
 		private void AddScopeds(IServiceCollection services)
 		{
-			services.AddScoped<IRepository<CriminalCode>, CriminalCodeRepository>();
-			services.AddScoped<IRepository<Status>, StatusRepository>();
-			services.AddScoped<IRepository<User>, UserRepository>();
+			services.AddScoped<ICriminalCodeRepository, CriminalCodeRepository>();
+			services.AddScoped<IStatusRepository, StatusRepository>();
+			services.AddScoped<IUserRepository, UserRepository>();
+
+			services.AddScoped<ICriminalCodeService, CriminalCodeService>();
+			services.AddScoped<IStatusService, StatusService>();
+			services.AddScoped<IUserService, UserService>();
+			services.AddScoped<ILoginService, LoginService>();
+		}
+
+		private void AddJwtBearerAuthentication(IServiceCollection services)
+		{
+			Authentication authentication = new Authentication();
+
+			services.AddSingleton(authentication);
+
+			services.AddAuthentication(x =>
+			{
+				x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+				x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+			})
+			.AddJwtBearer(x =>
+			{
+				x.RequireHttpsMetadata = false;
+				x.SaveToken = true;
+				x.TokenValidationParameters = new TokenValidationParameters
+				{
+					ValidateIssuerSigningKey = true,
+					IssuerSigningKey = authentication.Key,
+					ValidateIssuer = false,
+					ValidateAudience = false
+				};
+			});
+		}
+
+		private void AddSwaggerConfigurationJwtBearer(SwaggerGenOptions swaggerGenOptions)
+		{
+			var openApiSecurityScheme = new OpenApiSecurityScheme
+			{
+				Name = "Authorization",
+				BearerFormat = "JWT",
+				Scheme = "bearer",
+				Description = "",
+				In = ParameterLocation.Header,
+				Type = SecuritySchemeType.Http
+			};
+
+			swaggerGenOptions.AddSecurityDefinition("Bearer", openApiSecurityScheme);
+
+			var security = new OpenApiSecurityRequirement
+			{
+				{
+					new OpenApiSecurityScheme
+					{
+						Reference = new OpenApiReference
+						{
+							Type = ReferenceType.SecurityScheme,
+							Id = "Bearer"
+						}
+					},
+					new string[]
+					{
+
+					}
+				}
+			};
+
+			swaggerGenOptions.AddSecurityRequirement(security);
 		}
 	}
 }
