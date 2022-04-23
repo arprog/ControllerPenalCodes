@@ -13,6 +13,9 @@ using Microsoft.IdentityModel.Tokens;
 using Swashbuckle.AspNetCore.SwaggerGen;
 using ControllerPenalCodes.Models.Interfaces.RepositoryInterfaces;
 using ControllerPenalCodes.Models.Interfaces.ServiceInterfaces;
+using System.Reflection;
+using System;
+using System.IO;
 
 namespace ControllerPenalCodes
 {
@@ -35,6 +38,8 @@ namespace ControllerPenalCodes
 				c.SwaggerDoc("v1", new OpenApiInfo { Title = "ControllerPenalCodes", Version = "v1" });
 
 				AddSwaggerConfigurationJwtBearer(c);
+
+				AddSwaggerResponsesDocumentations(c);
 			});
 			AddDatabaseConfiguration(services);
 			AddScopeds(services);
@@ -146,5 +151,12 @@ namespace ControllerPenalCodes
 
 			swaggerGenOptions.AddSecurityRequirement(security);
 		}
+
+		private void AddSwaggerResponsesDocumentations(SwaggerGenOptions swaggerGenOptions)
+		{
+			var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+			var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+			swaggerGenOptions.IncludeXmlComments(xmlPath);
+		} 
 	}
 }
