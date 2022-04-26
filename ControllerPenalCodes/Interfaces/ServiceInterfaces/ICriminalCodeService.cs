@@ -13,10 +13,6 @@ namespace ControllerPenalCodes.Interfaces.ServiceInterfaces
 
 		Task<Response<IEnumerable<GetCriminalCodeViewModel>>> GetAll();
 
-		Task<Response<GetCriminalCodeViewModel>> GetById(Guid criminalCodeId);
-
-		Task<Response<GetCriminalCodeViewModel>> GetByName(string criminalCodeName);
-
 		Task<Response<CriminalCode>> Update(UpdateCriminalCodeViewModel newCriminalCodeViewModel, string updatingUserId);
 
 		Task<Response<CriminalCode>> Delete(Guid criminalCodeId);

@@ -90,7 +90,7 @@ namespace ControllerPenalCodes.Controllers
 				if (response.Ok)
 					return Ok();
 
-				return String.IsNullOrEmpty(response.Message) ? NoContent() : BadRequest(response.Message);
+				return string.IsNullOrEmpty(response.Message) ? NoContent() : BadRequest(response.Message);
 			}
 			catch(Exception)
 			{

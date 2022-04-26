@@ -35,7 +35,7 @@ namespace ControllerPenalCodes.Repositories
 				.ToListAsync();
 		}
 
-		public async Task<CriminalCode> Get(Guid criminalCodeId)
+		public async Task<CriminalCode> GetById(Guid criminalCodeId)
 		{
 			return await _dbContext.CriminalCodes
 				.AsNoTracking()
@@ -45,7 +45,7 @@ namespace ControllerPenalCodes.Repositories
 				.FirstOrDefaultAsync(criminalCode => criminalCode.Id.Equals(criminalCodeId));
 		}
 
-		public async Task<CriminalCode> Get(string criminalCodeName)
+		public async Task<CriminalCode> GetByName(string criminalCodeName)
 		{
 			return await _dbContext.CriminalCodes
 				.AsNoTracking()

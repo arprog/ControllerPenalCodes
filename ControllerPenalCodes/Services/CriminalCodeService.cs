@@ -26,10 +26,10 @@ namespace ControllerPenalCodes.Services
 
 		public async Task<Response<CriminalCode>> Create(CreateCriminalCodeViewModel criminalCodeViewModel, string creatingUserId)
 		{
-			if (String.IsNullOrEmpty(creatingUserId))
+			if (string.IsNullOrEmpty(creatingUserId))
 				return Response<CriminalCode>.ResponseService(false, "Failed to identify authenticated user.");
 
-			var criminalCode = await _criminalCodeRepository.Get(criminalCodeViewModel.Name);
+			var criminalCode = await _criminalCodeRepository.GetByName(criminalCodeViewModel.Name);
 
 			if (criminalCode != null)
 				return Response<CriminalCode>.ResponseService(false, "There is already criminal code registered with the 'name' informed.");
@@ -76,41 +76,17 @@ namespace ControllerPenalCodes.Services
 			return Response<IEnumerable<GetCriminalCodeViewModel>>.ResponseService(true, criminalCodeViewModelList);
 		}
 
-		public async Task<Response<GetCriminalCodeViewModel>> GetById(Guid criminalCodeId)
-		{
-			var criminalCode = await _criminalCodeRepository.Get(criminalCodeId);
-
-			if (criminalCode == null)
-				return Response<GetCriminalCodeViewModel>.ResponseService(false);
-
-			var criminalCodeViewModel = CriminalCodeMapper.EntityToViewModel(criminalCode);
-
-			return Response<GetCriminalCodeViewModel>.ResponseService(true, criminalCodeViewModel);
-		}
-
-		public async Task<Response<GetCriminalCodeViewModel>> GetByName(string criminalCodeName)
-		{
-			var criminalCode = await _criminalCodeRepository.Get(criminalCodeName);
-
-			if (criminalCode == null)
-				return Response<GetCriminalCodeViewModel>.ResponseService(false);
-
-			var criminalCodeViewModel = CriminalCodeMapper.EntityToViewModel(criminalCode);
-
-			return Response<GetCriminalCodeViewModel>.ResponseService(true, criminalCodeViewModel);
-		}
-
 		public async Task<Response<CriminalCode>> Update(UpdateCriminalCodeViewModel newCriminalCodeViewModel, string updatingUserId)
 		{
-			if (String.IsNullOrEmpty(updatingUserId))
+			if (string.IsNullOrEmpty(updatingUserId))
 				return Response<CriminalCode>.ResponseService(false, "Failed to identify authenticated user.");
 
-			var criminalCode = await _criminalCodeRepository.Get(newCriminalCodeViewModel.Name);
+			var criminalCode = await _criminalCodeRepository.GetByName(newCriminalCodeViewModel.Name);
 
 			if (criminalCode != null)
 				return Response<CriminalCode>.ResponseService(false, "There is already criminal code registered with the 'name' informed.");
 
-			criminalCode = await _criminalCodeRepository.Get(newCriminalCodeViewModel.Id);
+			criminalCode = await _criminalCodeRepository.GetById(newCriminalCodeViewModel.Id);
 
 			if (criminalCode == null)
 				return Response<CriminalCode>.ResponseService(false);
@@ -147,7 +123,7 @@ namespace ControllerPenalCodes.Services
 
 		public async Task<Response<CriminalCode>> Delete(Guid criminalCodeId)
 		{
-			var criminalCode = await _criminalCodeRepository.Get(criminalCodeId);
+			var criminalCode = await _criminalCodeRepository.GetById(criminalCodeId);
 
 			if (criminalCode == null)
 				return Response<CriminalCode>.ResponseService(false);

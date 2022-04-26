@@ -63,22 +63,6 @@ namespace ControllerPenalCodes.Controllers
 			}
 		}
 
-		[HttpGet]
-		[Route("criminal-codes/id/{id}")]
-		public async Task<IActionResult> GetById([FromRoute] Guid id)
-		{
-			try
-			{
-				var response = await _criminalCodeService.GetById(id);
-
-				return response.Ok ? Ok(response.Return) : NoContent();
-			}
-			catch (Exception)
-			{
-				return StatusCode(500);
-			}
-		}
-
 		[HttpPut]
 		[Route("criminal-codes/{id}")]
 		public async Task<IActionResult> Put([FromBody] UpdateCriminalCodeViewModel criminalCodeViewModel)
@@ -95,7 +79,7 @@ namespace ControllerPenalCodes.Controllers
 				if (response.Ok)
 					return Ok();
 
-				return String.IsNullOrEmpty(response.Message) ? NoContent() : BadRequest(response.Message);
+				return string.IsNullOrEmpty(response.Message) ? NoContent() : BadRequest(response.Message);
 			}
 			catch (Exception)
 			{
