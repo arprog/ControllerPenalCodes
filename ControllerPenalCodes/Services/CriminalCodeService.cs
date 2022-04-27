@@ -34,10 +34,10 @@ namespace ControllerPenalCodes.Services
 			if (criminalCode != null)
 				return Response<CriminalCode>.ResponseService(false, "There is already criminal code registered with the 'name' informed.");
 
-			if (criminalCode.Status == null || criminalCode.Status.Id == Guid.Empty)
-				throw new ArgumentException("Error mapping database data.");
+			if (criminalCodeViewModel.StatusId == Guid.Empty)
+				return Response<CriminalCode>.ResponseService(false, "The 'statusId' is zeroed.");
 
-			var status = await _statusRepository.GetById(criminalCode.Status.Id);
+			var status = await _statusRepository.GetById(criminalCodeViewModel.StatusId);
 
 			if (status == null)
 				return Response<CriminalCode>.ResponseService(false, "There is no status registered with the 'statusId' informed.");
@@ -52,7 +52,7 @@ namespace ControllerPenalCodes.Services
 				Description = criminalCodeViewModel.Description,
 				Penalty = criminalCodeViewModel.Penalty,
 				PrisionTime = criminalCodeViewModel.PrisionTime,
-				StatusId = status.Id,
+				StatusId = criminalCodeViewModel.StatusId,
 				CreateDate = DateTime.Now,
 				UpdateDate = DateTime.Now,
 				CreateUserId = Guid.Parse(creatingUserId),
@@ -81,38 +81,41 @@ namespace ControllerPenalCodes.Services
 			if (string.IsNullOrEmpty(updatingUserId))
 				return Response<CriminalCode>.ResponseService(false, "Failed to identify authenticated user.");
 
-			var criminalCode = await _criminalCodeRepository.GetByName(newCriminalCodeViewModel.Name);
+			if (newCriminalCodeViewModel.Id == Guid.Empty)
+				return Response<CriminalCode>.ResponseService(false, "The 'id' is zeroed.");
 
-			if (criminalCode != null)
-				return Response<CriminalCode>.ResponseService(false, "There is already criminal code registered with the 'name' informed.");
+			var criminalCodeById = await _criminalCodeRepository.GetById(newCriminalCodeViewModel.Id);
 
-			criminalCode = await _criminalCodeRepository.GetById(newCriminalCodeViewModel.Id);
+			if (criminalCodeById == null)
+				return Response<CriminalCode>.ResponseService(false, "There is no criminal code registered with the 'id' informed.");
 
-			if (criminalCode == null)
-				return Response<CriminalCode>.ResponseService(false);
+			var criminalCodeByName = await _criminalCodeRepository.GetOtherCriminalCodeByName(newCriminalCodeViewModel.Id, newCriminalCodeViewModel.Name);
 
-			if (criminalCode.Status == null || criminalCode.Status.Id == Guid.Empty)
-				throw new ArgumentException("Error mapping database data.");
+			if (criminalCodeByName != null)
+				return Response<CriminalCode>.ResponseService(false, "There is already other criminal code registered with the 'name' informed.");
 
-			var status = await _statusRepository.GetById(criminalCode.Status.Id);
+			if (newCriminalCodeViewModel.StatusId == Guid.Empty)
+				return Response<CriminalCode>.ResponseService(false, "The 'statusId' is zeroed.");
+
+			var status = await _statusRepository.GetById(newCriminalCodeViewModel.StatusId);
 
 			if (status == null)
-				return Response<CriminalCode>.ResponseService(false);
+				return Response<CriminalCode>.ResponseService(false, "There is no status registered with the 'statusId' informed.");
 
 			if (newCriminalCodeViewModel.Penalty <= 0 || newCriminalCodeViewModel.PrisionTime <= 0)
 				return Response<CriminalCode>.ResponseService(false, "The value of the 'penalty' and 'prisonTime' must be greater than 0.");
 
 			var newCriminalCode = new CriminalCode
 			{
-				Id = criminalCode.Id,
-				Name = criminalCode.Name,
+				Id = criminalCodeById.Id,
+				Name = newCriminalCodeViewModel.Name,
 				Description = newCriminalCodeViewModel.Description,
 				Penalty = newCriminalCodeViewModel.Penalty,
 				PrisionTime = newCriminalCodeViewModel.PrisionTime,
-				StatusId = newCriminalCodeViewModel.Id,
-				CreateDate = criminalCode.CreateDate,
+				StatusId = newCriminalCodeViewModel.StatusId,
+				CreateDate = criminalCodeById.CreateDate,
 				UpdateDate = DateTime.Now,
-				CreateUserId = criminalCode.CreateUser.Id,
+				CreateUserId = criminalCodeById.CreateUserId,
 				UpdateUserId = Guid.Parse(updatingUserId)
 			};
 
@@ -123,10 +126,13 @@ namespace ControllerPenalCodes.Services
 
 		public async Task<Response<CriminalCode>> Delete(Guid criminalCodeId)
 		{
+			if (criminalCodeId == Guid.Empty)
+				return Response<CriminalCode>.ResponseService(false, "The 'id' is zeroed.");
+
 			var criminalCode = await _criminalCodeRepository.GetById(criminalCodeId);
 
 			if (criminalCode == null)
-				return Response<CriminalCode>.ResponseService(false);
+				return Response<CriminalCode>.ResponseService(false, "There is no criminal code registered with the 'id' informed.");
 
 			await _criminalCodeRepository.Remove(criminalCode);
 

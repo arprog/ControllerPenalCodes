@@ -76,10 +76,7 @@ namespace ControllerPenalCodes.Controllers
 
 				var response = await _criminalCodeService.Update(criminalCodeViewModel, userId);
 
-				if (response.Ok)
-					return Ok();
-
-				return string.IsNullOrEmpty(response.Message) ? NoContent() : BadRequest(response.Message);
+				return response.Ok ? Ok() : BadRequest(response.Message);
 			}
 			catch (Exception)
 			{
@@ -95,7 +92,7 @@ namespace ControllerPenalCodes.Controllers
 			{
 				var response = await _criminalCodeService.Delete(id);
 
-				return response.Ok ? Ok() : NoContent();
+				return response.Ok ? Ok() : BadRequest(response.Message);
 			}
 			catch (Exception)
 			{

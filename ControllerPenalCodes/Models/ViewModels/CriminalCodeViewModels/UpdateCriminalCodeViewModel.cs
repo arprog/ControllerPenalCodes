@@ -24,11 +24,5 @@ namespace ControllerPenalCodes.Models.ViewModels.CriminalCodeViewModels
 
 		[Required]
 		public Guid StatusId { get; set; }
-
-		[Required]
-		public DateTime CreateDate { get; set; }
-
-		[Required]
-		public Guid CreateUserId { get; set; }
 	}
 }

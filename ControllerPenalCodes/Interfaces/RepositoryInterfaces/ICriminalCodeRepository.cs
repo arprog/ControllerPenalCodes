@@ -11,6 +11,8 @@ namespace ControllerPenalCodes.Interfaces.RepositoryInterfaces
 
 		Task<IEnumerable<CriminalCode>> GetAll();
 
+		Task<CriminalCode> GetOtherCriminalCodeByName(Guid criminalCodeId, string criminalCodeName);
+
 		Task<CriminalCode> GetById(Guid criminalCodeId);
 
 		Task<CriminalCode> GetByName(string criminalCodeName);

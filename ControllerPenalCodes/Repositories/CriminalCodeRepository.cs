@@ -35,6 +35,17 @@ namespace ControllerPenalCodes.Repositories
 				.ToListAsync();
 		}
 
+		public async Task<CriminalCode> GetOtherCriminalCodeByName(Guid criminalCodeId, string criminalCodeName)
+		{
+			return await _dbContext.CriminalCodes
+				.AsNoTracking()
+				.Include(criminalCode => criminalCode.Status)
+				.Include(criminalCode => criminalCode.CreateUser)
+				.Include(criminalCode => criminalCode.UpdateUser)
+				.FirstOrDefaultAsync(criminalCode => !criminalCode.Id.Equals(criminalCodeId)
+				&& criminalCode.Name.Equals(criminalCodeName));
+		}
+
 		public async Task<CriminalCode> GetById(Guid criminalCodeId)
 		{
 			return await _dbContext.CriminalCodes
