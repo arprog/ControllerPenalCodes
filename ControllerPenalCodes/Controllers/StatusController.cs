@@ -68,7 +68,10 @@ namespace ControllerPenalCodes.Controllers
 			{
 				var response = await _statusService.GetById(id);
 
-				return response.Ok ? Ok(response.Return) : NoContent();
+				if (response.Ok)
+					return Ok(response.Return);
+
+				return string.IsNullOrEmpty(response.Message) ? NoContent() : BadRequest(response.Message);
 			}
 			catch (Exception)
 			{
@@ -87,10 +90,7 @@ namespace ControllerPenalCodes.Controllers
 			{
 				var response = await _statusService.Update(statusViewModel);
 
-				if (response.Ok)
-					return Ok();
-
-				return string.IsNullOrEmpty(response.Message) ? NoContent() : BadRequest(response.Message);
+				return response.Ok ? Ok() : BadRequest(response.Message);
 			}
 			catch(Exception)
 			{
@@ -106,7 +106,7 @@ namespace ControllerPenalCodes.Controllers
 			{
 				var response = await _statusService.Delete(id);
 
-				return response.Ok ? Ok() : NoContent();
+				return response.Ok ? Ok() : BadRequest(response.Message);
 			}
 			catch (Exception)
 			{

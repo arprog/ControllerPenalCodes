@@ -53,6 +53,9 @@ namespace ControllerPenalCodes.Services
 
 		public async Task<Response<GetStatusViewModel>> GetById(Guid statusId)
 		{
+			if (statusId == Guid.Empty)
+				return Response<GetStatusViewModel>.ResponseService(false, "The 'statusId' is zeroed.");
+
 			var status = await _statusRepository.GetById(statusId);
 
 			if (status == null)
@@ -77,19 +80,22 @@ namespace ControllerPenalCodes.Services
 
 		public async Task<Response<Status>> Update(UpdateStatusViewModel newStatusViewModel)
 		{
-			var status = await _statusRepository.GetByName(newStatusViewModel.Name);
+			if (newStatusViewModel.Id == Guid.Empty)
+				return Response<Status>.ResponseService(false, "The 'id' is zeroed.");
 
-			if (status != null)
-				return Response<Status>.ResponseService(false, "There is already status registered with the 'name' informed.");
+			var statusById = await _statusRepository.GetById(newStatusViewModel.Id);
 
-			status = await _statusRepository.GetById(newStatusViewModel.Id);
+			if (statusById == null)
+				return Response<Status>.ResponseService(false, "There is no status registered with the 'id' informed.");
 
-			if (status == null)
-				return Response<Status>.ResponseService(false);
+			var statusByName = await _statusRepository.GetOtherStatusByName(newStatusViewModel.Id, newStatusViewModel.Name);
+
+			if (statusByName != null)
+				return Response<Status>.ResponseService(false, "There is already other status registered with the 'name' informed.");
 
 			var newStatus = new Status
 			{
-				Id = status.Id,
+				Id = statusById.Id,
 				Name = newStatusViewModel.Name
 			};
 
@@ -100,10 +106,13 @@ namespace ControllerPenalCodes.Services
 
 		public async Task<Response<Status>> Delete(Guid statusId)
 		{
+			if (statusId == Guid.Empty)
+				return Response<Status>.ResponseService(false, "The 'id' is zeroed.");
+
 			var status = await _statusRepository.GetById(statusId);
 
 			if (status == null)
-				return Response<Status>.ResponseService(false);
+				return Response<Status>.ResponseService(false, "There is no status registered with the 'id' informed.");
 
 			await _statusRepository.Remove(status);
 

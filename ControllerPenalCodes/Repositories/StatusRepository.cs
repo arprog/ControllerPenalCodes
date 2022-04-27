@@ -32,6 +32,14 @@ namespace ControllerPenalCodes.Repositories
 				.ToListAsync();
 		}
 
+		public async Task<Status> GetOtherStatusByName(Guid statusId, string statusName)
+		{
+			return await _dbContext.Status
+				.AsNoTracking()
+				.FirstOrDefaultAsync(status => !status.Id.Equals(statusId)
+				&& status.Name.Equals(statusName));
+		}
+
 		public async Task<Status> GetById(Guid statusId)
 		{
 			return await _dbContext.Status
