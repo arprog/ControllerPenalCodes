@@ -35,7 +35,7 @@ namespace ControllerPenalCodes
 			{
 				c.EnableAnnotations();
 
-				c.SwaggerDoc("v1", new OpenApiInfo { Title = "ControllerPenalCodes", Version = "v1" });
+				c.SwaggerDoc("v1", new OpenApiInfo { Title = "API ControllerPenalCodes", Version = "v1" });
 
 				AddSwaggerConfigurationJwtBearer(c);
 
@@ -124,7 +124,7 @@ namespace ControllerPenalCodes
 				Name = "Authorization",
 				BearerFormat = "JWT",
 				Scheme = "bearer",
-				Description = "",
+				Description = "Enter your bearer token",
 				In = ParameterLocation.Header,
 				Type = SecuritySchemeType.Http
 			};
