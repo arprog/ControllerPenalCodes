@@ -35,7 +35,7 @@ namespace ControllerPenalCodes.Controllers
 
 			try
 			{
-				var userId = User.Claims.FirstOrDefault(i => i.Type.Equals("NameIdentifier")).Value;
+				var userId = User.Claims.FirstOrDefault(i => i.Type.Contains("nameidentifier")).Value;
 
 				var response = await _criminalCodeService.Create(criminalCodeViewModel, userId);
 
@@ -72,7 +72,7 @@ namespace ControllerPenalCodes.Controllers
 
 			try
 			{
-				var userId = User.Claims.FirstOrDefault(i => i.Type.Equals("NameIdentifier")).Value;
+				var userId = User.Claims.FirstOrDefault(i => i.Type.Contains("nameidentifier")).Value;
 
 				var response = await _criminalCodeService.Update(criminalCodeViewModel, userId);
 
