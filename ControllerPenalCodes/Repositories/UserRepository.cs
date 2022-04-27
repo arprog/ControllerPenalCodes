@@ -32,6 +32,14 @@ namespace ControllerPenalCodes.Repositories
 				.ToListAsync();
 		}
 
+		public async Task<User> GetOtherUserByUsername(Guid userId, string username)
+		{
+			return await _dbContext.Users
+				.AsNoTracking()
+				.FirstOrDefaultAsync(user => !user.Id.Equals(userId)
+				&& user.UserName.Equals(username));
+		}
+
 		public async Task<User> GetByLogin(string username, string userPassword)
 		{
 			return await _dbContext.Users

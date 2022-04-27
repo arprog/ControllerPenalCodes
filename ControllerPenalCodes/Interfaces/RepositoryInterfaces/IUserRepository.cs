@@ -11,6 +11,8 @@ namespace ControllerPenalCodes.Interfaces.RepositoryInterfaces
 
 		Task<IEnumerable<User>> GetAll();
 
+		Task<User> GetOtherUserByUsername(Guid userId, string username);
+
 		Task<User> GetByLogin(string username, string userPassword);
 
 		Task<User> GetById(Guid userId);

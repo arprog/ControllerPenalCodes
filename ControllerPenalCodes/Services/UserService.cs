@@ -53,6 +53,9 @@ namespace ControllerPenalCodes.Services
 
 		public async Task<Response<GetUserViewModel>> GetById(Guid userId)
 		{
+			if (userId == Guid.Empty)
+				return Response<GetUserViewModel>.ResponseService(false, "The 'id' is zeroed.");
+
 			var user = await _userRepository.GetById(userId);
 
 			if (user == null)
@@ -77,19 +80,22 @@ namespace ControllerPenalCodes.Services
 
 		public async Task<Response<User>> Update(UpdateUserViewModel newUserViewModel)
 		{
-			var user = await _userRepository.GetByUsername(newUserViewModel.Username);
+			if (newUserViewModel.Id == Guid.Empty)
+				return Response<User>.ResponseService(false, "The 'id' is zeroed.");
 
-			if (user != null)
-				return Response<User>.ResponseService(false, "There is already user registered with the 'username' informed.");
+			var userById = await _userRepository.GetById(newUserViewModel.Id);
 
-			user = await _userRepository.GetById(newUserViewModel.Id);
+			if (userById == null)
+				return Response<User>.ResponseService(false, "There is no user registered with the 'id' informed.");
 
-			if (user == null)
-				return Response<User>.ResponseService(false);
+			var userByUsername = await _userRepository.GetOtherUserByUsername(newUserViewModel.Id, newUserViewModel.Username);
+
+			if (userByUsername != null)
+				return Response<User>.ResponseService(false, "There is already other user registered with the 'username' informed.");
 
 			var newUser = new User
 			{
-				Id = user.Id,
+				Id = userById.Id,
 				UserName = newUserViewModel.Username,
 				Password = Security.GenerateHashPassword(newUserViewModel.Password)
 			};
@@ -101,10 +107,13 @@ namespace ControllerPenalCodes.Services
 
 		public async Task<Response<User>> Delete(Guid userId)
 		{
+			if (userId == Guid.Empty)
+				return Response<User>.ResponseService(false, "The 'id' is zeroed.");
+
 			var user = await _userRepository.GetById(userId);
 
 			if (user == null)
-				return Response<User>.ResponseService(false);
+				return Response<User>.ResponseService(false, "There is no user registered with the 'id' informed.");
 
 			await _userRepository.Remove(user);
 
