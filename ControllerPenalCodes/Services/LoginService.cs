@@ -25,7 +25,7 @@ namespace ControllerPenalCodes.Services
 		{
             var password = Security.GenerateHashPassword(userViewModel.Password);
 
-            var user = await _userRepository.Get(userViewModel.Username, password);
+            var user = await _userRepository.GetByLogin(userViewModel.Username, password);
 
             if (user == null)
                 return Response<TokenViewModel>.ResponseService(false, "Invalid username or password.");

@@ -23,7 +23,7 @@ namespace ControllerPenalCodes.Services
 
 		public async Task<Response<Status>> Create(CreateStatusViewModel statusViewModel)
 		{
-			var status = await _statusRepository.Get(statusViewModel.Name);
+			var status = await _statusRepository.GetByName(statusViewModel.Name);
 
 			if (status != null)
 				return Response<Status>.ResponseService(false, "There is already status registered with the 'name' informed.");
@@ -53,7 +53,7 @@ namespace ControllerPenalCodes.Services
 
 		public async Task<Response<GetStatusViewModel>> GetById(Guid statusId)
 		{
-			var status = await _statusRepository.Get(statusId);
+			var status = await _statusRepository.GetById(statusId);
 
 			if (status == null)
 				return Response<GetStatusViewModel>.ResponseService(false);
@@ -65,7 +65,7 @@ namespace ControllerPenalCodes.Services
 
 		public async Task<Response<GetStatusViewModel>> GetByName(string statusName)
 		{
-			var status = await _statusRepository.Get(statusName);
+			var status = await _statusRepository.GetByName(statusName);
 
 			if (status == null)
 				return Response<GetStatusViewModel>.ResponseService(false);
@@ -77,12 +77,12 @@ namespace ControllerPenalCodes.Services
 
 		public async Task<Response<Status>> Update(UpdateStatusViewModel newStatusViewModel)
 		{
-			var status = await _statusRepository.Get(newStatusViewModel.Name);
+			var status = await _statusRepository.GetByName(newStatusViewModel.Name);
 
 			if (status != null)
 				return Response<Status>.ResponseService(false, "There is already status registered with the 'name' informed.");
 
-			status = await _statusRepository.Get(newStatusViewModel.Id);
+			status = await _statusRepository.GetById(newStatusViewModel.Id);
 
 			if (status == null)
 				return Response<Status>.ResponseService(false);
@@ -100,7 +100,7 @@ namespace ControllerPenalCodes.Services
 
 		public async Task<Response<Status>> Delete(Guid statusId)
 		{
-			var status = await _statusRepository.Get(statusId);
+			var status = await _statusRepository.GetById(statusId);
 
 			if (status == null)
 				return Response<Status>.ResponseService(false);

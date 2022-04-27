@@ -37,7 +37,7 @@ namespace ControllerPenalCodes.Services
 			if (criminalCode.Status == null || criminalCode.Status.Id == Guid.Empty)
 				throw new ArgumentException("Error mapping database data.");
 
-			var status = await _statusRepository.Get(criminalCode.Status.Id);
+			var status = await _statusRepository.GetById(criminalCode.Status.Id);
 
 			if (status == null)
 				return Response<CriminalCode>.ResponseService(false, "There is no status registered with the 'statusId' informed.");
@@ -94,7 +94,7 @@ namespace ControllerPenalCodes.Services
 			if (criminalCode.Status == null || criminalCode.Status.Id == Guid.Empty)
 				throw new ArgumentException("Error mapping database data.");
 
-			var status = await _statusRepository.Get(criminalCode.Status.Id);
+			var status = await _statusRepository.GetById(criminalCode.Status.Id);
 
 			if (status == null)
 				return Response<CriminalCode>.ResponseService(false);

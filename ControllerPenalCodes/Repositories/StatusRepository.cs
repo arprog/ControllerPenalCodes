@@ -32,14 +32,14 @@ namespace ControllerPenalCodes.Repositories
 				.ToListAsync();
 		}
 
-		public async Task<Status> Get(Guid statusId)
+		public async Task<Status> GetById(Guid statusId)
 		{
 			return await _dbContext.Status
 				.AsNoTracking()
 				.FirstOrDefaultAsync(status => status.Id.Equals(statusId));
 		}
 
-		public async Task<Status> Get(string statusName)
+		public async Task<Status> GetByName(string statusName)
 		{
 			return await _dbContext.Status
 				.AsNoTracking()

@@ -32,21 +32,21 @@ namespace ControllerPenalCodes.Repositories
 				.ToListAsync();
 		}
 
-		public async Task<User> Get(string username, string userPassword)
+		public async Task<User> GetByLogin(string username, string userPassword)
 		{
 			return await _dbContext.Users
 				.AsNoTracking()
 				.FirstOrDefaultAsync(user => user.UserName.Equals(username) && user.Password.Equals(userPassword));
 		}
 
-		public async Task<User> Get(Guid userId)
+		public async Task<User> GetById(Guid userId)
 		{
 			return await _dbContext.Users
 				.AsNoTracking()
 				.FirstOrDefaultAsync(user => user.Id.Equals(userId));
 		}
 
-		public async Task<User> Get(string username)
+		public async Task<User> GetByUsername(string username)
 		{
 			return await _dbContext.Users
 				.AsNoTracking()

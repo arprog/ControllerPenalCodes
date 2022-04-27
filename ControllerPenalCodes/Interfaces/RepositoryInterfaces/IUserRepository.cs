@@ -11,11 +11,11 @@ namespace ControllerPenalCodes.Interfaces.RepositoryInterfaces
 
 		Task<IEnumerable<User>> GetAll();
 
-		Task<User> Get(string username, string userPassword);
+		Task<User> GetByLogin(string username, string userPassword);
 
-		Task<User> Get(Guid userId);
+		Task<User> GetById(Guid userId);
 
-		Task<User> Get(string username);
+		Task<User> GetByUsername(string username);
 
 		Task Update(User user);
 

@@ -22,7 +22,7 @@ namespace ControllerPenalCodes.Services
 
 		public async Task<Response<User>> Create(CreateUserViewModel userViewModel)
 		{
-			var user = await _userRepository.Get(userViewModel.Username);
+			var user = await _userRepository.GetByUsername(userViewModel.Username);
 
 			if (user != null)
 				return Response<User>.ResponseService(false, "There is already user registered with the 'username' informed.");
@@ -53,7 +53,7 @@ namespace ControllerPenalCodes.Services
 
 		public async Task<Response<GetUserViewModel>> GetById(Guid userId)
 		{
-			var user = await _userRepository.Get(userId);
+			var user = await _userRepository.GetById(userId);
 
 			if (user == null)
 				return Response<GetUserViewModel>.ResponseService(false);
@@ -65,7 +65,7 @@ namespace ControllerPenalCodes.Services
 
 		public async Task<Response<GetUserViewModel>> GetByUsername(string username)
 		{
-			var user = await _userRepository.Get(username);
+			var user = await _userRepository.GetByUsername(username);
 
 			if (user == null)
 				return Response<GetUserViewModel>.ResponseService(false);
@@ -77,12 +77,12 @@ namespace ControllerPenalCodes.Services
 
 		public async Task<Response<User>> Update(UpdateUserViewModel newUserViewModel)
 		{
-			var user = await _userRepository.Get(newUserViewModel.Username);
+			var user = await _userRepository.GetByUsername(newUserViewModel.Username);
 
 			if (user != null)
 				return Response<User>.ResponseService(false, "There is already user registered with the 'username' informed.");
 
-			user = await _userRepository.Get(newUserViewModel.Id);
+			user = await _userRepository.GetById(newUserViewModel.Id);
 
 			if (user == null)
 				return Response<User>.ResponseService(false);
@@ -101,7 +101,7 @@ namespace ControllerPenalCodes.Services
 
 		public async Task<Response<User>> Delete(Guid userId)
 		{
-			var user = await _userRepository.Get(userId);
+			var user = await _userRepository.GetById(userId);
 
 			if (user == null)
 				return Response<User>.ResponseService(false);

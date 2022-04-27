@@ -11,9 +11,9 @@ namespace ControllerPenalCodes.Interfaces.RepositoryInterfaces
 
 		Task<IEnumerable<Status>> GetAll();
 
-		Task<Status> Get(Guid statusId);
+		Task<Status> GetById(Guid statusId);
 
-		Task<Status> Get(string statusName);
+		Task<Status> GetByName(string statusName);
 
 		Task Update(Status status);
 
