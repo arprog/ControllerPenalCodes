@@ -42,8 +42,8 @@ namespace ControllerPenalCodes.Repositories
 				.Include(criminalCode => criminalCode.Status)
 				.Include(criminalCode => criminalCode.CreateUser)
 				.Include(criminalCode => criminalCode.UpdateUser)
-				.FirstOrDefaultAsync(criminalCode => !criminalCode.Id.Equals(criminalCodeId)
-				&& criminalCode.Name.Equals(criminalCodeName));
+				.FirstOrDefaultAsync(criminalCode => !(criminalCode.Id == criminalCodeId)
+				&& criminalCode.Name == criminalCodeName);
 		}
 
 		public async Task<CriminalCode> GetById(Guid criminalCodeId)
@@ -53,7 +53,7 @@ namespace ControllerPenalCodes.Repositories
 				.Include(criminalCode => criminalCode.Status)
 				.Include(criminalCode => criminalCode.CreateUser)
 				.Include(criminalCode => criminalCode.UpdateUser)
-				.FirstOrDefaultAsync(criminalCode => criminalCode.Id.Equals(criminalCodeId));
+				.FirstOrDefaultAsync(criminalCode => criminalCode.Id == criminalCodeId);
 		}
 
 		public async Task<CriminalCode> GetByName(string criminalCodeName)
@@ -63,7 +63,7 @@ namespace ControllerPenalCodes.Repositories
 				.Include(criminalCode => criminalCode.Status)
 				.Include(criminalCode => criminalCode.CreateUser)
 				.Include(criminalCode => criminalCode.UpdateUser)
-				.FirstOrDefaultAsync(criminalCode => criminalCode.Name.Equals(criminalCodeName));
+				.FirstOrDefaultAsync(criminalCode => criminalCode.Name == criminalCodeName);
 		}
 
 		public async Task Update(CriminalCode criminalCode)

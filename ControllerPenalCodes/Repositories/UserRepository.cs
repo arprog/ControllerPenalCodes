@@ -36,29 +36,30 @@ namespace ControllerPenalCodes.Repositories
 		{
 			return await _dbContext.Users
 				.AsNoTracking()
-				.FirstOrDefaultAsync(user => !user.Id.Equals(userId)
-				&& user.UserName.Equals(username));
+				.FirstOrDefaultAsync(user => !(user.Id == userId)
+				&& user.UserName == username);
 		}
 
 		public async Task<User> GetByLogin(string username, string userPassword)
 		{
 			return await _dbContext.Users
 				.AsNoTracking()
-				.FirstOrDefaultAsync(user => user.UserName.Equals(username) && user.Password.Equals(userPassword));
+				.FirstOrDefaultAsync(user => user.UserName == username
+				&& user.Password == userPassword);
 		}
 
 		public async Task<User> GetById(Guid userId)
 		{
 			return await _dbContext.Users
 				.AsNoTracking()
-				.FirstOrDefaultAsync(user => user.Id.Equals(userId));
+				.FirstOrDefaultAsync(user => user.Id == userId);
 		}
 
 		public async Task<User> GetByUsername(string username)
 		{
 			return await _dbContext.Users
 				.AsNoTracking()
-				.FirstOrDefaultAsync(user => user.UserName.Equals(username));
+				.FirstOrDefaultAsync(user => user.UserName == username);
 		}
 
 		public async Task Update(User user)

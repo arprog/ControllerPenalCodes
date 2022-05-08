@@ -36,22 +36,22 @@ namespace ControllerPenalCodes.Repositories
 		{
 			return await _dbContext.Status
 				.AsNoTracking()
-				.FirstOrDefaultAsync(status => !status.Id.Equals(statusId)
-				&& status.Name.Equals(statusName));
+				.FirstOrDefaultAsync(status => !(status.Id == statusId)
+				&& status.Name == statusName);
 		}
 
 		public async Task<Status> GetById(Guid statusId)
 		{
 			return await _dbContext.Status
 				.AsNoTracking()
-				.FirstOrDefaultAsync(status => status.Id.Equals(statusId));
+				.FirstOrDefaultAsync(status => status.Id == statusId);
 		}
 
 		public async Task<Status> GetByName(string statusName)
 		{
 			return await _dbContext.Status
 				.AsNoTracking()
-				.FirstOrDefaultAsync(status => status.Name.Equals(statusName));
+				.FirstOrDefaultAsync(status => status.Name == statusName);
 		}
 
 		public async Task Update(Status status)
