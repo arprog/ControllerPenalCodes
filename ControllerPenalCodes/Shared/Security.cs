@@ -1,7 +1,7 @@
 ﻿using System.Security.Cryptography;
 using System.Text;
 
-namespace ControllerPenalCodes.Utils
+namespace ControllerPenalCodes.Shared
 {
 	public class Security
 	{

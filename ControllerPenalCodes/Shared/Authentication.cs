@@ -1,7 +1,7 @@
 ﻿using System.Security.Cryptography;
 using Microsoft.IdentityModel.Tokens;
 
-namespace ControllerPenalCodes.Utils
+namespace ControllerPenalCodes.Shared
 {
 	public class Authentication
 	{

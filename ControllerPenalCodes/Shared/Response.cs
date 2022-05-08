@@ -1,4 +1,4 @@
-﻿namespace ControllerPenalCodes.Utils
+﻿namespace ControllerPenalCodes.Shared
 {
 	public class Response<T>
 	{

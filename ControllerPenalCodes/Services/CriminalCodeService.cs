@@ -8,7 +8,7 @@ using ControllerPenalCodes.Interfaces.RepositoryInterfaces;
 using ControllerPenalCodes.Interfaces.ServiceInterfaces;
 using ControllerPenalCodes.Models.Mappers;
 using ControllerPenalCodes.Models.ViewModels.CriminalCodeViewModels;
-using ControllerPenalCodes.Utils;
+using ControllerPenalCodes.Shared;
 
 namespace ControllerPenalCodes.Services
 {

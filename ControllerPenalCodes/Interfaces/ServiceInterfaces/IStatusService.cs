@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using ControllerPenalCodes.Models.Entities;
 using ControllerPenalCodes.Models.ViewModels.StatusViewModels;
-using ControllerPenalCodes.Utils;
+using ControllerPenalCodes.Shared;
 
 namespace ControllerPenalCodes.Interfaces.ServiceInterfaces
 {

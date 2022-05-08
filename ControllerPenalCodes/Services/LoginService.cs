@@ -7,7 +7,7 @@ using ControllerPenalCodes.Interfaces.RepositoryInterfaces;
 using ControllerPenalCodes.Interfaces.ServiceInterfaces;
 using ControllerPenalCodes.Models.ViewModels.LoginViewModels;
 using ControllerPenalCodes.Models.ViewModels.UserViewModels;
-using ControllerPenalCodes.Utils;
+using ControllerPenalCodes.Shared;
 using Microsoft.IdentityModel.Tokens;
 
 namespace ControllerPenalCodes.Services

@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
 using ControllerPenalCodes.Models.ViewModels.LoginViewModels;
 using ControllerPenalCodes.Models.ViewModels.UserViewModels;
-using ControllerPenalCodes.Utils;
+using ControllerPenalCodes.Shared;
 
 namespace ControllerPenalCodes.Interfaces.ServiceInterfaces
 {
