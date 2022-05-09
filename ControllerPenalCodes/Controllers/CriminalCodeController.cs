@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using ControllerPenalCodes.Interfaces.ServiceInterfaces;
 using ControllerPenalCodes.Models.ViewModels.CriminalCodeViewModels;
+using ControllerPenalCodes.Shared;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -35,7 +36,7 @@ namespace ControllerPenalCodes.Controllers
 
 			try
 			{
-				var userId = User.Claims.FirstOrDefault(i => i.Type.Contains("nameidentifier")).Value;
+				var userId = Authentication.GetUserId(User?.Claims);
 
 				var response = await _criminalCodeService.Create(userId, criminalCodeViewModel);
 
@@ -87,7 +88,7 @@ namespace ControllerPenalCodes.Controllers
 
 			try
 			{
-				var userId = User.Claims.FirstOrDefault(i => i.Type.Contains("nameidentifier")).Value;
+				var userId = Authentication.GetUserId(User?.Claims);
 
 				var response = await _criminalCodeService.Update(id, userId, criminalCodeViewModel);
 
