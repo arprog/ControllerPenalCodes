@@ -62,6 +62,22 @@ namespace ControllerPenalCodes.Controllers
 			}
 		}
 
+		[HttpGet]
+		[Route("{id}")]
+		public async Task<IActionResult> Get(Guid id)
+		{
+			try
+			{
+				var response = await _criminalCodeService.Get(id);
+
+				return response.Ok ? Ok(response.Return) : NoContent();
+			}
+			catch (Exception)
+			{
+				return StatusCode(500);
+			}
+		}
+
 		[HttpPut]
 		[Route("{id}")]
 		public async Task<IActionResult> Put([FromRoute] Guid id, [FromBody] UpdateCriminalCodeViewModel criminalCodeViewModel)

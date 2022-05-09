@@ -75,6 +75,18 @@ namespace ControllerPenalCodes.Services
 			return Response<IEnumerable<GetGenericCriminalCodeViewModel>>.ResponseService(true, criminalCodeViewModelList);
 		}
 
+		public async Task<Response<GetUniqueCriminalCodeViewModel>> Get(Guid criminalCodeId)
+		{
+			var criminalCode = await _criminalCodeRepository.GetById(criminalCodeId);
+
+			if (criminalCode == null)
+				return Response<GetUniqueCriminalCodeViewModel>.ResponseService(false);
+
+			var criminalCodeViewModel = CriminalCodeMapper.EntityToUniqueViewModel(criminalCode);
+
+			return Response<GetUniqueCriminalCodeViewModel>.ResponseService(true, criminalCodeViewModel);
+		}
+
 		public async Task<Response<CriminalCode>> Update(Guid criminalCodeId, string updatingUserId, UpdateCriminalCodeViewModel newCriminalCodeViewModel)
 		{
 			if (string.IsNullOrEmpty(updatingUserId))
