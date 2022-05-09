@@ -36,6 +36,23 @@ namespace ControllerPenalCodes.Models.Mappers
 			};
 		}
 
+		public static GetCreatedCriminalCodeViewModel EntityToCreatedViewModel(CriminalCode criminalCode)
+		{
+			return criminalCode == null ? null : new GetCreatedCriminalCodeViewModel
+			{
+				Id = criminalCode.Id,
+				Name = criminalCode.Name,
+				Description = criminalCode.Description,
+				Penalty = criminalCode.Penalty,
+				PrisionTime = criminalCode.PrisionTime,
+				StatusId = criminalCode.StatusId,
+				CreateDate = criminalCode.CreateDate,
+				UpdateDate = criminalCode.UpdateDate,
+				CreateUserId = criminalCode.CreateUserId,
+				UpdateUserId = criminalCode.UpdateUserId
+			};
+		}
+
 		public static IEnumerable<GetGenericCriminalCodeViewModel> EntityListToGenericViewModelList(IEnumerable<CriminalCode> criminalCodeList)
 		{
 			return criminalCodeList?.Select(criminalCode => EntityToGenericViewModel(criminalCode));

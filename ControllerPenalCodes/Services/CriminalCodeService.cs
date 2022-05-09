@@ -23,23 +23,25 @@ namespace ControllerPenalCodes.Services
 			_statusRepository = statusRepository;
 		}
 
-		public async Task<Response<CriminalCode>> Create(string creatingUserId, CreateCriminalCodeViewModel criminalCodeViewModel)
+		public async Task<Response<GetCreatedCriminalCodeViewModel>> Create(string creatingUserId, CreateCriminalCodeViewModel criminalCodeViewModel)
 		{
 			if (string.IsNullOrEmpty(creatingUserId))
-				return Response<CriminalCode>.ResponseService(false, "Failed to identify authenticated user.");
+				return Response<GetCreatedCriminalCodeViewModel>.ResponseService(false, "Failed to identify authenticated user.");
 
 			var criminalCode = await _criminalCodeRepository.GetByName(criminalCodeViewModel.Name);
 
 			if (criminalCode != null)
-				return Response<CriminalCode>.ResponseService(false, "There is already criminal code registered with the 'name' informed.");
+				return Response<GetCreatedCriminalCodeViewModel>.ResponseService(false, "There is already criminal code registered with the 'name' informed.");
 
 			if (criminalCodeViewModel.StatusId == Guid.Empty)
-				return Response<CriminalCode>.ResponseService(false, "The 'statusId' is zeroed.");
+				return Response<GetCreatedCriminalCodeViewModel>.ResponseService(false, "The 'statusId' is zeroed.");
 
 			var status = await _statusRepository.GetById(criminalCodeViewModel.StatusId);
 
 			if (status == null)
-				return Response<CriminalCode>.ResponseService(false, "There is no status registered with the 'statusId' informed.");
+				return Response<GetCreatedCriminalCodeViewModel>.ResponseService(false, "There is no status registered with the 'statusId' informed.");
+
+			var currentDate = DateTime.Now;
 
 			criminalCode = new CriminalCode
 			{
@@ -49,15 +51,17 @@ namespace ControllerPenalCodes.Services
 				Penalty = criminalCodeViewModel.Penalty,
 				PrisionTime = criminalCodeViewModel.PrisionTime,
 				StatusId = criminalCodeViewModel.StatusId,
-				CreateDate = DateTime.Now,
-				UpdateDate = DateTime.Now,
+				CreateDate = currentDate,
+				UpdateDate = currentDate,
 				CreateUserId = Guid.Parse(creatingUserId),
 				UpdateUserId = Guid.Parse(creatingUserId)
 			};
 
 			await _criminalCodeRepository.Add(criminalCode);
 
-			return Response<CriminalCode>.ResponseService(true, $"api/v1/criminal-codes/{criminalCode.Id}", criminalCode);
+			var createdCriminalCodeViewModel = CriminalCodeMapper.EntityToCreatedViewModel(criminalCode);
+
+			return Response<GetCreatedCriminalCodeViewModel>.ResponseService(true, $"api/v1/criminal-codes/{createdCriminalCodeViewModel.Id}", createdCriminalCodeViewModel);
 		}
 
 		public async Task<Response<IEnumerable<GetGenericCriminalCodeViewModel>>> GetAll()
