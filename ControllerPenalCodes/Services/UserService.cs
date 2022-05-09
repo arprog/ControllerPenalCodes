@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using ControllerPenalCodes.Models.Entities;
 using ControllerPenalCodes.Interfaces.RepositoryInterfaces;
@@ -45,7 +44,7 @@ namespace ControllerPenalCodes.Services
 		{
 			var userList = await _userRepository.GetAll();
 
-			if (userList == null || userList.Count() == 0)
+			if (userList == null)
 				return Response<IEnumerable<GetUserViewModel>>.ResponseService(false);
 
 			var userViewModelList = UserMapper.EntityListToViewModelList(userList);

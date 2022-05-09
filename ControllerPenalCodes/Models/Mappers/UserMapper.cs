@@ -18,7 +18,10 @@ namespace ControllerPenalCodes.Models.Mappers
 
 		public static IEnumerable<GetUserViewModel> EntityListToViewModelList(IEnumerable<User> userList)
 		{
-			return userList?.Select(user => EntityToViewModel(user));
+			if (userList == null || userList.Count() == 0)
+				return null;
+
+			return userList.Select(user => EntityToViewModel(user));
 		}
 	}
 }

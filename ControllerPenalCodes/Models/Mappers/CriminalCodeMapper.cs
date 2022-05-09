@@ -55,7 +55,10 @@ namespace ControllerPenalCodes.Models.Mappers
 
 		public static IEnumerable<GetGenericCriminalCodeViewModel> EntityListToGenericViewModelList(IEnumerable<CriminalCode> criminalCodeList)
 		{
-			return criminalCodeList?.Select(criminalCode => EntityToGenericViewModel(criminalCode));
+			if (criminalCodeList == null || criminalCodeList.Count() == 0)
+				return null;
+
+			return criminalCodeList.Select(criminalCode => EntityToGenericViewModel(criminalCode));
 		}
 	}
 }

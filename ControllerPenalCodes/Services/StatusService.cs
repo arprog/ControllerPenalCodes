@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Net;
 using System.Threading.Tasks;
 using ControllerPenalCodes.Models.Entities;
 using ControllerPenalCodes.Interfaces.RepositoryInterfaces;
@@ -43,7 +41,7 @@ namespace ControllerPenalCodes.Services
 		{
 			var statusList = await _statusRepository.GetAll();
 
-			if (statusList == null || statusList.Count() == 0)
+			if (statusList == null)
 				return Response<IEnumerable<GetStatusViewModel>>.ResponseService(false);
 
 			var statusViewModelList = StatusMapper.EntityListToViewModelList(statusList);

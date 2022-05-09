@@ -18,7 +18,10 @@ namespace ControllerPenalCodes.Models.Mappers
 
 		public static IEnumerable<GetStatusViewModel> EntityListToViewModelList(IEnumerable<Status> statusList)
 		{
-			return statusList?.Select(status => EntityToViewModel(status));
+			if (statusList == null || statusList.Count() == 0)
+				return null;
+
+			return statusList.Select(status => EntityToViewModel(status));
 		}
 	}
 }

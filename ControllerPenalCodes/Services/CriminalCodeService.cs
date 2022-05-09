@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using ControllerPenalCodes.Models.Entities;
 using ControllerPenalCodes.Interfaces.RepositoryInterfaces;
@@ -68,7 +67,7 @@ namespace ControllerPenalCodes.Services
 		{
 			var criminalCodeList = await _criminalCodeRepository.GetAll();
 				
-			if (criminalCodeList == null || criminalCodeList.Count() == 0)
+			if (criminalCodeList == null)
 				return Response<IEnumerable<GetGenericCriminalCodeViewModel>>.ResponseService(false);
 
 			var criminalCodeViewModelList = CriminalCodeMapper.EntityListToGenericViewModelList(criminalCodeList);
