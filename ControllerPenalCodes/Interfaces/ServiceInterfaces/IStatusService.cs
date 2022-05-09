@@ -17,7 +17,7 @@ namespace ControllerPenalCodes.Interfaces.ServiceInterfaces
 
 		Task<Response<GetStatusViewModel>> GetByName(string statusName);
 
-		Task<Response<Status>> Update(UpdateStatusViewModel newStatusViewModel);
+		Task<Response<Status>> Update(Guid statusId, UpdateStatusViewModel newStatusViewModel);
 
 		Task<Response<Status>> Delete(Guid statusId);
 	}

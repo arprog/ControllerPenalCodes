@@ -9,11 +9,11 @@ namespace ControllerPenalCodes.Interfaces.ServiceInterfaces
 {
 	public interface ICriminalCodeService
 	{
-		Task<Response<CriminalCode>> Create(CreateCriminalCodeViewModel criminalCodeViewModel, string creatingUserId);
+		Task<Response<CriminalCode>> Create(string creatingUserId, CreateCriminalCodeViewModel criminalCodeViewModel);
 
-		Task<Response<IEnumerable<GetCriminalCodeViewModel>>> GetAll();
+		Task<Response<IEnumerable<GetGenericCriminalCodeViewModel>>> GetAll();
 
-		Task<Response<CriminalCode>> Update(UpdateCriminalCodeViewModel newCriminalCodeViewModel, string updatingUserId);
+		Task<Response<CriminalCode>> Update(Guid criminalCodeId, string updatingUserId, UpdateCriminalCodeViewModel newCriminalCodeViewModel);
 
 		Task<Response<CriminalCode>> Delete(Guid criminalCodeId);
 	}

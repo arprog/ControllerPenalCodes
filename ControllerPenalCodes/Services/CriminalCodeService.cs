@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
 using System.Threading.Tasks;
 using ControllerPenalCodes.Models.Entities;
 using ControllerPenalCodes.Interfaces.RepositoryInterfaces;
@@ -24,7 +23,7 @@ namespace ControllerPenalCodes.Services
 			_statusRepository = statusRepository;
 		}
 
-		public async Task<Response<CriminalCode>> Create(CreateCriminalCodeViewModel criminalCodeViewModel, string creatingUserId)
+		public async Task<Response<CriminalCode>> Create(string creatingUserId, CreateCriminalCodeViewModel criminalCodeViewModel)
 		{
 			if (string.IsNullOrEmpty(creatingUserId))
 				return Response<CriminalCode>.ResponseService(false, "Failed to identify authenticated user.");
@@ -61,32 +60,32 @@ namespace ControllerPenalCodes.Services
 			return Response<CriminalCode>.ResponseService(true, $"api/v1/criminal-codes/{criminalCode.Id}", criminalCode);
 		}
 
-		public async Task<Response<IEnumerable<GetCriminalCodeViewModel>>> GetAll()
+		public async Task<Response<IEnumerable<GetGenericCriminalCodeViewModel>>> GetAll()
 		{
 			var criminalCodeList = await _criminalCodeRepository.GetAll();
 				
 			if (criminalCodeList == null || criminalCodeList.Count() == 0)
-				return Response<IEnumerable<GetCriminalCodeViewModel>>.ResponseService(false);
+				return Response<IEnumerable<GetGenericCriminalCodeViewModel>>.ResponseService(false);
 
-			var criminalCodeViewModelList = CriminalCodeMapper.EntityListToViewModelList(criminalCodeList);
+			var criminalCodeViewModelList = CriminalCodeMapper.EntityListToGenericViewModelList(criminalCodeList);
 
-			return Response<IEnumerable<GetCriminalCodeViewModel>>.ResponseService(true, criminalCodeViewModelList);
+			return Response<IEnumerable<GetGenericCriminalCodeViewModel>>.ResponseService(true, criminalCodeViewModelList);
 		}
 
-		public async Task<Response<CriminalCode>> Update(UpdateCriminalCodeViewModel newCriminalCodeViewModel, string updatingUserId)
+		public async Task<Response<CriminalCode>> Update(Guid criminalCodeId, string updatingUserId, UpdateCriminalCodeViewModel newCriminalCodeViewModel)
 		{
 			if (string.IsNullOrEmpty(updatingUserId))
 				return Response<CriminalCode>.ResponseService(false, "Failed to identify authenticated user.");
 
-			if (newCriminalCodeViewModel.Id == Guid.Empty)
+			if (criminalCodeId == Guid.Empty)
 				return Response<CriminalCode>.ResponseService(false, "The 'id' is zeroed.");
 
-			var criminalCodeById = await _criminalCodeRepository.GetById(newCriminalCodeViewModel.Id);
+			var criminalCodeById = await _criminalCodeRepository.GetById(criminalCodeId);
 
 			if (criminalCodeById == null)
 				return Response<CriminalCode>.ResponseService(false, "There is no criminal code registered with the 'id' informed.");
 
-			var criminalCodeByName = await _criminalCodeRepository.GetOtherCriminalCodeByName(newCriminalCodeViewModel.Id, newCriminalCodeViewModel.Name);
+			var criminalCodeByName = await _criminalCodeRepository.GetOtherCriminalCodeByName(criminalCodeId, newCriminalCodeViewModel.Name);
 
 			if (criminalCodeByName != null)
 				return Response<CriminalCode>.ResponseService(false, "There is already other criminal code registered with the 'name' informed.");

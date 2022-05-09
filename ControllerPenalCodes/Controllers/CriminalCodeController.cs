@@ -37,7 +37,7 @@ namespace ControllerPenalCodes.Controllers
 			{
 				var userId = User.Claims.FirstOrDefault(i => i.Type.Contains("nameidentifier")).Value;
 
-				var response = await _criminalCodeService.Create(criminalCodeViewModel, userId);
+				var response = await _criminalCodeService.Create(userId, criminalCodeViewModel);
 
 				return response.Ok ? Created(response.Message, response.Return) : BadRequest(response.Message);
 			}
@@ -64,7 +64,7 @@ namespace ControllerPenalCodes.Controllers
 
 		[HttpPut]
 		[Route("{id}")]
-		public async Task<IActionResult> Put([FromBody] UpdateCriminalCodeViewModel criminalCodeViewModel)
+		public async Task<IActionResult> Put([FromRoute] Guid id, [FromBody] UpdateCriminalCodeViewModel criminalCodeViewModel)
 		{
 			if (!ModelState.IsValid)
 				return BadRequest();
@@ -73,7 +73,7 @@ namespace ControllerPenalCodes.Controllers
 			{
 				var userId = User.Claims.FirstOrDefault(i => i.Type.Contains("nameidentifier")).Value;
 
-				var response = await _criminalCodeService.Update(criminalCodeViewModel, userId);
+				var response = await _criminalCodeService.Update(id, userId, criminalCodeViewModel);
 
 				return response.Ok ? Ok() : BadRequest(response.Message);
 			}

@@ -20,12 +20,12 @@ namespace ControllerPenalCodes.Services
 			_userRepository = userRepository;
 		}
 
-		public async Task<Response<User>> Create(CreateUserViewModel userViewModel)
+		public async Task<Response<GetUserViewModel>> Create(CreateUserViewModel userViewModel)
 		{
 			var user = await _userRepository.GetByUsername(userViewModel.Username);
 
 			if (user != null)
-				return Response<User>.ResponseService(false, "There is already user registered with the 'username' informed.");
+				return Response<GetUserViewModel>.ResponseService(false, "There is already user registered with the 'username' informed.");
 
 			user = new User
 			{
@@ -36,7 +36,9 @@ namespace ControllerPenalCodes.Services
 
 			await _userRepository.Add(user);
 
-			return Response<User>.ResponseService(true, $"api/v1/users/{user.Id}", user);
+			var createdUserViewModel = UserMapper.EntityToViewModel(user);
+
+			return Response<GetUserViewModel>.ResponseService(true, $"api/v1/users/{createdUserViewModel.Id}", createdUserViewModel);
 		}
 
 		public async Task<Response<IEnumerable<GetUserViewModel>>> GetAll()
@@ -78,17 +80,17 @@ namespace ControllerPenalCodes.Services
 			return Response<GetUserViewModel>.ResponseService(true, userViewModel);
 		}
 
-		public async Task<Response<User>> Update(UpdateUserViewModel newUserViewModel)
+		public async Task<Response<User>> Update(Guid userId, UpdateUserViewModel newUserViewModel)
 		{
-			if (newUserViewModel.Id == Guid.Empty)
+			if (userId == Guid.Empty)
 				return Response<User>.ResponseService(false, "The 'id' is zeroed.");
 
-			var userById = await _userRepository.GetById(newUserViewModel.Id);
+			var userById = await _userRepository.GetById(userId);
 
 			if (userById == null)
 				return Response<User>.ResponseService(false, "There is no user registered with the 'id' informed.");
 
-			var userByUsername = await _userRepository.GetOtherUserByUsername(newUserViewModel.Id, newUserViewModel.Username);
+			var userByUsername = await _userRepository.GetOtherUserByUsername(userId, newUserViewModel.Username);
 
 			if (userByUsername != null)
 				return Response<User>.ResponseService(false, "There is already other user registered with the 'username' informed.");

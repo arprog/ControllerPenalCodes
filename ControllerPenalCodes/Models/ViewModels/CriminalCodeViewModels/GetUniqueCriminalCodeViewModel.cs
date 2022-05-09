@@ -1,9 +1,10 @@
 ﻿using System;
-using ControllerPenalCodes.Models.Entities;
+using ControllerPenalCodes.Models.ViewModels.StatusViewModels;
+using ControllerPenalCodes.Models.ViewModels.UserViewModels;
 
 namespace ControllerPenalCodes.Models.ViewModels.CriminalCodeViewModels
 {
-	public class GetCriminalCodeViewModel
+	public class GetUniqueCriminalCodeViewModel
 	{
 		public Guid Id { get; set; }
 
@@ -15,14 +16,14 @@ namespace ControllerPenalCodes.Models.ViewModels.CriminalCodeViewModels
 
 		public int PrisionTime { get; set; }
 
-		public Status Status { get; set; }
+		public GetStatusViewModel Status { get; set; }
 
 		public DateTime CreateDate { get; set; }
 
 		public DateTime UpdateDate { get; set; }
 
-		public User CreateUser { get; set; }
+		public GetUserViewModel CreateUser { get; set; }
 
-		public User UpdateUser { get; set; }
+		public GetUserViewModel UpdateUser { get; set; }
 	}
 }

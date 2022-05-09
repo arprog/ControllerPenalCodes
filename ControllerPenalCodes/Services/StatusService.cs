@@ -78,17 +78,17 @@ namespace ControllerPenalCodes.Services
 			return Response<GetStatusViewModel>.ResponseService(true, statusViewModel);
 		}
 
-		public async Task<Response<Status>> Update(UpdateStatusViewModel newStatusViewModel)
+		public async Task<Response<Status>> Update(Guid statusId, UpdateStatusViewModel newStatusViewModel)
 		{
-			if (newStatusViewModel.Id == Guid.Empty)
+			if (statusId == Guid.Empty)
 				return Response<Status>.ResponseService(false, "The 'id' is zeroed.");
 
-			var statusById = await _statusRepository.GetById(newStatusViewModel.Id);
+			var statusById = await _statusRepository.GetById(statusId);
 
 			if (statusById == null)
 				return Response<Status>.ResponseService(false, "There is no status registered with the 'id' informed.");
 
-			var statusByName = await _statusRepository.GetOtherStatusByName(newStatusViewModel.Id, newStatusViewModel.Name);
+			var statusByName = await _statusRepository.GetOtherStatusByName(statusId, newStatusViewModel.Name);
 
 			if (statusByName != null)
 				return Response<Status>.ResponseService(false, "There is already other status registered with the 'name' informed.");

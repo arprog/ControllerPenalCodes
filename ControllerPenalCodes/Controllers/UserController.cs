@@ -81,14 +81,14 @@ namespace ControllerPenalCodes.Controllers
 
 		[HttpPut]
 		[Route("{id}")]
-		public async Task<IActionResult> Put([FromBody] UpdateUserViewModel userViewModel)
+		public async Task<IActionResult> Put([FromRoute] Guid id, [FromBody] UpdateUserViewModel userViewModel)
 		{
 			if (!ModelState.IsValid)
 				return BadRequest();
 
 			try
 			{
-				var response = await _userService.Update(userViewModel);
+				var response = await _userService.Update(id, userViewModel);
 
 				return response.Ok ? Ok() : BadRequest(response.Message);
 			}

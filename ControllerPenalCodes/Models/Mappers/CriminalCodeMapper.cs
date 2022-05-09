@@ -7,26 +7,38 @@ namespace ControllerPenalCodes.Models.Mappers
 {
 	public class CriminalCodeMapper
 	{
-		public static GetCriminalCodeViewModel EntityToViewModel(CriminalCode criminalCode)
+		public static GetUniqueCriminalCodeViewModel EntityToUniqueViewModel(CriminalCode criminalCode)
 		{
-			return criminalCode == null ? null : new GetCriminalCodeViewModel
+			return criminalCode == null ? null : new GetUniqueCriminalCodeViewModel
 			{
 				Id = criminalCode.Id,
 				Name = criminalCode.Name,
 				Description = criminalCode.Description,
 				Penalty = criminalCode.Penalty,
 				PrisionTime = criminalCode.PrisionTime,
-				Status = criminalCode.Status,
+				Status = StatusMapper.EntityToViewModel(criminalCode.Status),
 				CreateDate = criminalCode.CreateDate,
 				UpdateDate = criminalCode.UpdateDate,
-				CreateUser = criminalCode.CreateUser,
-				UpdateUser = criminalCode.UpdateUser
+				CreateUser = UserMapper.EntityToViewModel(criminalCode.CreateUser),
+				UpdateUser = UserMapper.EntityToViewModel(criminalCode.UpdateUser)
 			};
 		}
 
-		public static IEnumerable<GetCriminalCodeViewModel> EntityListToViewModelList(IEnumerable<CriminalCode> criminalCodeList)
+		public static GetGenericCriminalCodeViewModel EntityToGenericViewModel(CriminalCode criminalCode)
 		{
-			return criminalCodeList?.Select(criminalCode => EntityToViewModel(criminalCode));
+			return criminalCode == null ? null : new GetGenericCriminalCodeViewModel
+			{
+				Id = criminalCode.Id,
+				Name = criminalCode.Name,
+				Penalty = criminalCode.Penalty,
+				PrisionTime = criminalCode.PrisionTime,
+				Status = StatusMapper.EntityToViewModel(criminalCode.Status),
+			};
+		}
+
+		public static IEnumerable<GetGenericCriminalCodeViewModel> EntityListToGenericViewModelList(IEnumerable<CriminalCode> criminalCodeList)
+		{
+			return criminalCodeList?.Select(criminalCode => EntityToGenericViewModel(criminalCode));
 		}
 	}
 }
