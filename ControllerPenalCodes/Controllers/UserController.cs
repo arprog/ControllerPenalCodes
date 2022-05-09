@@ -13,10 +13,11 @@ namespace ControllerPenalCodes.Controllers
 	/// <response code="204">No Content</response>
 	/// <response code="400">Bad Request</response>
 	/// <response code="401">Unauthorized</response>
+	/// <response code="404">Not Found</response>
 	/// <response code="500">Internal Server Error</response>
 	[ApiController]
 	[Authorize]
-	[Route("api/v1")]
+	[Route("api/v1/users")]
 	public class UserController : ControllerBase
 	{
 		private readonly IUserService _userService;
@@ -27,8 +28,6 @@ namespace ControllerPenalCodes.Controllers
 		}
 
 		[HttpPost]
-		[AllowAnonymous]
-		[Route("users")]
 		public async Task<IActionResult> Post([FromBody] CreateUserViewModel userViewModel)
 		{
 			if (!ModelState.IsValid)
@@ -47,7 +46,6 @@ namespace ControllerPenalCodes.Controllers
 		}
 
 		[HttpGet]
-		[Route("users")]
 		public async Task<IActionResult> GetAll()
 		{
 			try
@@ -63,7 +61,7 @@ namespace ControllerPenalCodes.Controllers
 		}
 
 		[HttpGet]
-		[Route("users/id/{id}")]
+		[Route("{id}")]
 		public async Task<IActionResult> GetById([FromRoute] Guid id)
 		{
 			try
@@ -82,7 +80,7 @@ namespace ControllerPenalCodes.Controllers
 		}
 
 		[HttpPut]
-		[Route("users/{id}")]
+		[Route("{id}")]
 		public async Task<IActionResult> Put([FromBody] UpdateUserViewModel userViewModel)
 		{
 			if (!ModelState.IsValid)
@@ -101,7 +99,7 @@ namespace ControllerPenalCodes.Controllers
 		}
 
 		[HttpDelete]
-		[Route("users/{id}")]
+		[Route("{id}")]
 		public async Task<IActionResult> Delete([FromRoute] Guid id)
 		{
 			try

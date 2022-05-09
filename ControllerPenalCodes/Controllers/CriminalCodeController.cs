@@ -13,10 +13,11 @@ namespace ControllerPenalCodes.Controllers
 	/// <response code="204">No Content</response>
 	/// <response code="400">Bad Request</response>
 	/// <response code="401">Unauthorized</response>
+	/// <response code="404">Not Found</response>
 	/// <response code="500">Internal Server Error</response>
 	[ApiController]
 	[Authorize]
-	[Route("api/v1")]
+	[Route("api/v1/criminal-codes")]
 	public class CriminalCodeController : ControllerBase
 	{
 		private readonly ICriminalCodeService _criminalCodeService;
@@ -27,7 +28,6 @@ namespace ControllerPenalCodes.Controllers
 		}
 
 		[HttpPost]
-		[Route("criminal-codes")]
 		public async Task<IActionResult> Post([FromBody] CreateCriminalCodeViewModel criminalCodeViewModel)
 		{
 			if (!ModelState.IsValid)
@@ -48,7 +48,6 @@ namespace ControllerPenalCodes.Controllers
 		}
 
 		[HttpGet]
-		[Route("criminal-codes")]
 		public async Task<IActionResult> GetAll()
 		{
 			try
@@ -64,7 +63,7 @@ namespace ControllerPenalCodes.Controllers
 		}
 
 		[HttpPut]
-		[Route("criminal-codes/{id}")]
+		[Route("{id}")]
 		public async Task<IActionResult> Put([FromBody] UpdateCriminalCodeViewModel criminalCodeViewModel)
 		{
 			if (!ModelState.IsValid)
@@ -85,7 +84,7 @@ namespace ControllerPenalCodes.Controllers
 		}
 
 		[HttpDelete]
-		[Route("criminal-codes/{id}")]
+		[Route("{id}")]
 		public async Task<IActionResult> Delete([FromRoute] Guid id)
 		{
 			try

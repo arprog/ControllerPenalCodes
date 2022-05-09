@@ -12,10 +12,11 @@ namespace ControllerPenalCodes.Controllers
 	/// <response code="204">No Content</response>
 	/// <response code="400">Bad Request</response>
 	/// <response code="401">Unauthorized</response>
+	/// <response code="404">Not Found</response>
 	/// <response code="500">Internal Server Error</response>
 	[ApiController]
 	[Authorize]
-	[Route("api/v1")]
+	[Route("api/v1/status")]
 	public class StatusController : ControllerBase
 	{
 		private readonly IStatusService _statusService;
@@ -26,7 +27,6 @@ namespace ControllerPenalCodes.Controllers
 		}
 
 		[HttpPost]
-		[Route("status")]
 		public async Task<IActionResult> Post([FromBody] CreateStatusViewModel statusViewModel)
 		{
 			if (!ModelState.IsValid)
@@ -45,7 +45,6 @@ namespace ControllerPenalCodes.Controllers
 		}
 
 		[HttpGet]
-		[Route("status")]
 		public async Task<IActionResult> GetAll()
 		{
 			try
@@ -61,7 +60,7 @@ namespace ControllerPenalCodes.Controllers
 		}
 
 		[HttpGet]
-		[Route("status/id/{id}")]
+		[Route("{id}")]
 		public async Task<IActionResult> GetById([FromRoute] Guid id)
 		{
 			try
@@ -80,7 +79,7 @@ namespace ControllerPenalCodes.Controllers
 		}
 
 		[HttpPut]
-		[Route("status/{id}")]
+		[Route("{id}")]
 		public async Task<IActionResult> Put([FromBody] UpdateStatusViewModel statusViewModel)
 		{
 			if (!ModelState.IsValid)
@@ -99,7 +98,7 @@ namespace ControllerPenalCodes.Controllers
 		}
 
 		[HttpDelete]
-		[Route("status/{id}")]
+		[Route("{id}")]
 		public async Task<IActionResult> Delete([FromRoute] Guid id)
 		{
 			try
