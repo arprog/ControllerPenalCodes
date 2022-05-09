@@ -37,15 +37,15 @@ namespace ControllerPenalCodes.Repositories
 			return await _dbContext.Users
 				.AsNoTracking()
 				.FirstOrDefaultAsync(user => !(user.Id == userId)
-				&& user.UserName == username);
+				&& user.UserName.ToLower() == username.ToLower());
 		}
 
 		public async Task<User> GetByLogin(string username, string userPassword)
 		{
 			return await _dbContext.Users
 				.AsNoTracking()
-				.FirstOrDefaultAsync(user => user.UserName == username
-				&& user.Password == userPassword);
+				.FirstOrDefaultAsync(user => user.UserName.ToLower() == username.ToLower()
+				&& user.Password.ToLower() == userPassword.ToLower());
 		}
 
 		public async Task<User> GetById(Guid userId)
@@ -59,7 +59,7 @@ namespace ControllerPenalCodes.Repositories
 		{
 			return await _dbContext.Users
 				.AsNoTracking()
-				.FirstOrDefaultAsync(user => user.UserName == username);
+				.FirstOrDefaultAsync(user => user.UserName.ToLower() == username.ToLower());
 		}
 
 		public async Task Update(User user)

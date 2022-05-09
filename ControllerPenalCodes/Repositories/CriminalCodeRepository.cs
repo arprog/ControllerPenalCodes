@@ -43,7 +43,7 @@ namespace ControllerPenalCodes.Repositories
 				.Include(criminalCode => criminalCode.CreateUser)
 				.Include(criminalCode => criminalCode.UpdateUser)
 				.FirstOrDefaultAsync(criminalCode => !(criminalCode.Id == criminalCodeId)
-				&& criminalCode.Name == criminalCodeName);
+				&& criminalCode.Name.ToLower() == criminalCodeName.ToLower());
 		}
 
 		public async Task<CriminalCode> GetById(Guid criminalCodeId)
@@ -63,7 +63,7 @@ namespace ControllerPenalCodes.Repositories
 				.Include(criminalCode => criminalCode.Status)
 				.Include(criminalCode => criminalCode.CreateUser)
 				.Include(criminalCode => criminalCode.UpdateUser)
-				.FirstOrDefaultAsync(criminalCode => criminalCode.Name == criminalCodeName);
+				.FirstOrDefaultAsync(criminalCode => criminalCode.Name.ToLower() == criminalCodeName.ToLower());
 		}
 
 		public async Task Update(CriminalCode criminalCode)

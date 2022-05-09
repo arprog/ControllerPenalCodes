@@ -37,7 +37,7 @@ namespace ControllerPenalCodes.Repositories
 			return await _dbContext.Status
 				.AsNoTracking()
 				.FirstOrDefaultAsync(status => !(status.Id == statusId)
-				&& status.Name == statusName);
+				&& status.Name.ToLower() == statusName.ToLower());
 		}
 
 		public async Task<Status> GetById(Guid statusId)
@@ -51,7 +51,7 @@ namespace ControllerPenalCodes.Repositories
 		{
 			return await _dbContext.Status
 				.AsNoTracking()
-				.FirstOrDefaultAsync(status => status.Name == statusName);
+				.FirstOrDefaultAsync(status => status.Name.ToLower() == statusName.ToLower());
 		}
 
 		public async Task Update(Status status)
