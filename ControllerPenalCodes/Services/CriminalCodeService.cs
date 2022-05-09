@@ -42,9 +42,6 @@ namespace ControllerPenalCodes.Services
 			if (status == null)
 				return Response<CriminalCode>.ResponseService(false, "There is no status registered with the 'statusId' informed.");
 
-			if (criminalCodeViewModel.Penalty <= 0 || criminalCodeViewModel.PrisionTime <= 0)
-				return Response<CriminalCode>.ResponseService(false, "The value of the 'penalty' and 'prisonTime' must be greater than 0.");
-
 			criminalCode = new CriminalCode
 			{
 				Id = Guid.NewGuid(),
@@ -101,9 +98,6 @@ namespace ControllerPenalCodes.Services
 
 			if (status == null)
 				return Response<CriminalCode>.ResponseService(false, "There is no status registered with the 'statusId' informed.");
-
-			if (newCriminalCodeViewModel.Penalty <= 0 || newCriminalCodeViewModel.PrisionTime <= 0)
-				return Response<CriminalCode>.ResponseService(false, "The value of the 'penalty' and 'prisonTime' must be greater than 0.");
 
 			var newCriminalCode = new CriminalCode
 			{
