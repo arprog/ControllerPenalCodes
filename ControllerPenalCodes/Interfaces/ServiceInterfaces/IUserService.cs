@@ -17,7 +17,9 @@ namespace ControllerPenalCodes.Interfaces.ServiceInterfaces
 
 		Task<Response<GetUserViewModel>> GetByUsername(string username);
 
-		Task<Response<User>> Update(Guid userId, UpdateUserViewModel newUserViewModel);
+		Task<Response<User>> UpdateUsername(Guid userId, UpdateUserViewModel newUserViewModel);
+
+		Task<Response<User>> UpdatePassword(Guid userId, UpdatePasswordUserViewModel userViewModel);
 
 		Task<Response<User>> Delete(Guid userId);
 	}

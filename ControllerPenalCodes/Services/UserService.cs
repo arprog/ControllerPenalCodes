@@ -55,7 +55,7 @@ namespace ControllerPenalCodes.Services
 		public async Task<Response<GetUserViewModel>> GetById(Guid userId)
 		{
 			if (userId == Guid.Empty)
-				return Response<GetUserViewModel>.ResponseService(false, "The 'id' is zeroed.");
+				return Response<GetUserViewModel>.ResponseService(false, "The 'id' informed is zeroed.");
 
 			var user = await _userRepository.GetById(userId);
 
@@ -79,29 +79,51 @@ namespace ControllerPenalCodes.Services
 			return Response<GetUserViewModel>.ResponseService(true, userViewModel);
 		}
 
-		public async Task<Response<User>> Update(Guid userId, UpdateUserViewModel newUserViewModel)
+		public async Task<Response<User>> UpdateUsername(Guid userId, UpdateUserViewModel userViewModel)
 		{
 			if (userId == Guid.Empty)
-				return Response<User>.ResponseService(false, "The 'id' is zeroed.");
+				return Response<User>.ResponseService(false, "The 'id' informed is zeroed.");
 
-			var userById = await _userRepository.GetById(userId);
+			var user = await _userRepository.GetOtherUserByUsername(userId, userViewModel.Username);
 
-			if (userById == null)
-				return Response<User>.ResponseService(false, "There is no user registered with the 'id' informed.");
-
-			var userByUsername = await _userRepository.GetOtherUserByUsername(userId, newUserViewModel.Username);
-
-			if (userByUsername != null)
+			if (user != null)
 				return Response<User>.ResponseService(false, "There is already other user registered with the 'username' informed.");
 
-			var newUser = new User
+			user = await _userRepository.GetById(userId);
+
+			if (user == null)
+				return Response<User>.ResponseService(false, "There is no user registered with the 'id' informed.");
+
+			user = new User
 			{
-				Id = userById.Id,
-				UserName = newUserViewModel.Username,
-				Password = Security.GenerateHashPassword(newUserViewModel.Password)
+				Id = user.Id,
+				UserName = userViewModel.Username,
+				Password = user.Password
 			};
 
-			await _userRepository.Update(newUser);
+			await _userRepository.Update(user);
+
+			return Response<User>.ResponseService(true);
+		}
+
+		public async Task<Response<User>> UpdatePassword(Guid userId, UpdatePasswordUserViewModel userViewModel)
+		{
+			if (userId == Guid.Empty)
+				return Response<User>.ResponseService(false, "The 'id' informed is zeroed.");
+
+			var user = await _userRepository.GetById(userId);
+
+			if (user == null)
+				return Response<User>.ResponseService(false, "There is no user registered with the 'id' informed.");
+
+			user = new User
+			{
+				Id = user.Id,
+				UserName = user.UserName,
+				Password = Security.GenerateHashPassword(userViewModel.Password)
+			};
+
+			await _userRepository.Update(user);
 
 			return Response<User>.ResponseService(true);
 		}
@@ -109,7 +131,7 @@ namespace ControllerPenalCodes.Services
 		public async Task<Response<User>> Delete(Guid userId)
 		{
 			if (userId == Guid.Empty)
-				return Response<User>.ResponseService(false, "The 'id' is zeroed.");
+				return Response<User>.ResponseService(false, "The 'id' informed is zeroed.");
 
 			var user = await _userRepository.GetById(userId);
 

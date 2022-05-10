@@ -33,7 +33,7 @@ namespace ControllerPenalCodes.Services
 				return Response<GetCreatedCriminalCodeViewModel>.ResponseService(false, "There is already criminal code registered with the 'name' informed.");
 
 			if (criminalCodeViewModel.StatusId == Guid.Empty)
-				return Response<GetCreatedCriminalCodeViewModel>.ResponseService(false, "The 'statusId' is zeroed.");
+				return Response<GetCreatedCriminalCodeViewModel>.ResponseService(false, "The 'statusId' informed is zeroed.");
 
 			var status = await _statusRepository.GetById(criminalCodeViewModel.StatusId);
 
@@ -93,7 +93,7 @@ namespace ControllerPenalCodes.Services
 				return Response<CriminalCode>.ResponseService(false, "Failed to identify authenticated user.");
 
 			if (criminalCodeId == Guid.Empty)
-				return Response<CriminalCode>.ResponseService(false, "The 'id' is zeroed.");
+				return Response<CriminalCode>.ResponseService(false, "The 'id' informed is zeroed.");
 
 			var criminalCodeById = await _criminalCodeRepository.GetById(criminalCodeId);
 
@@ -106,7 +106,7 @@ namespace ControllerPenalCodes.Services
 				return Response<CriminalCode>.ResponseService(false, "There is already other criminal code registered with the 'name' informed.");
 
 			if (newCriminalCodeViewModel.StatusId == Guid.Empty)
-				return Response<CriminalCode>.ResponseService(false, "The 'statusId' is zeroed.");
+				return Response<CriminalCode>.ResponseService(false, "The 'statusId' informed is zeroed.");
 
 			var status = await _statusRepository.GetById(newCriminalCodeViewModel.StatusId);
 
@@ -135,7 +135,7 @@ namespace ControllerPenalCodes.Services
 		public async Task<Response<CriminalCode>> Delete(Guid criminalCodeId)
 		{
 			if (criminalCodeId == Guid.Empty)
-				return Response<CriminalCode>.ResponseService(false, "The 'id' is zeroed.");
+				return Response<CriminalCode>.ResponseService(false, "The 'id' informed is zeroed.");
 
 			var criminalCode = await _criminalCodeRepository.GetById(criminalCodeId);
 

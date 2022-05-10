@@ -81,14 +81,33 @@ namespace ControllerPenalCodes.Controllers
 
 		[HttpPut]
 		[Route("{id}")]
-		public async Task<IActionResult> Put([FromRoute] Guid id, [FromBody] UpdateUserViewModel userViewModel)
+		public async Task<IActionResult> PutChangeUsername([FromRoute] Guid id, [FromBody] UpdateUserViewModel userViewModel)
 		{
 			if (!ModelState.IsValid)
 				return BadRequest();
 
 			try
 			{
-				var response = await _userService.Update(id, userViewModel);
+				var response = await _userService.UpdateUsername(id, userViewModel);
+
+				return response.Ok ? Ok() : BadRequest(response.Message);
+			}
+			catch (Exception)
+			{
+				return StatusCode(500);
+			}
+		}
+
+		[HttpPut]
+		[Route("{id}/change-password")]
+		public async Task<IActionResult> PutChangePassword([FromRoute] Guid id, [FromBody] UpdatePasswordUserViewModel userViewModel)
+		{
+			if (!ModelState.IsValid)
+				return BadRequest();
+
+			try
+			{
+				var response = await _userService.UpdatePassword(id, userViewModel);
 
 				return response.Ok ? Ok() : BadRequest(response.Message);
 			}

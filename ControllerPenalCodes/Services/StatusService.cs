@@ -52,7 +52,7 @@ namespace ControllerPenalCodes.Services
 		public async Task<Response<GetStatusViewModel>> GetById(Guid statusId)
 		{
 			if (statusId == Guid.Empty)
-				return Response<GetStatusViewModel>.ResponseService(false, "The 'statusId' is zeroed.");
+				return Response<GetStatusViewModel>.ResponseService(false, "The 'statusId' informed is zeroed.");
 
 			var status = await _statusRepository.GetById(statusId);
 
@@ -79,7 +79,7 @@ namespace ControllerPenalCodes.Services
 		public async Task<Response<Status>> Update(Guid statusId, UpdateStatusViewModel newStatusViewModel)
 		{
 			if (statusId == Guid.Empty)
-				return Response<Status>.ResponseService(false, "The 'id' is zeroed.");
+				return Response<Status>.ResponseService(false, "The 'id' informed is zeroed.");
 
 			var statusById = await _statusRepository.GetById(statusId);
 
@@ -105,7 +105,7 @@ namespace ControllerPenalCodes.Services
 		public async Task<Response<Status>> Delete(Guid statusId)
 		{
 			if (statusId == Guid.Empty)
-				return Response<Status>.ResponseService(false, "The 'id' is zeroed.");
+				return Response<Status>.ResponseService(false, "The 'id' informed is zeroed.");
 
 			var status = await _statusRepository.GetById(statusId);
 

@@ -2,10 +2,10 @@
 
 namespace ControllerPenalCodes.Models.ViewModels.UserViewModels
 {
-	public class UpdateUserViewModel
+	public class UpdatePasswordUserViewModel
 	{
 		[Required(AllowEmptyStrings = false)]
 		[DisplayFormat(ConvertEmptyStringToNull = false)]
-		public string Username { get; set; }
+		public string Password { get; set; }
 	}
 }
