@@ -62,11 +62,11 @@ namespace ControllerPenalCodes.Controllers
 
 		[HttpGet]
 		[Route("{id}")]
-		public async Task<IActionResult> GetById([FromRoute] Guid id)
+		public async Task<IActionResult> Get([FromRoute] Guid id)
 		{
 			try
 			{
-				var response = await _userService.GetById(id);
+				var response = await _userService.Get(id);
 
 				if (response.Ok)
 					return Ok(response.Return);
@@ -81,7 +81,7 @@ namespace ControllerPenalCodes.Controllers
 
 		[HttpPut]
 		[Route("{id}")]
-		public async Task<IActionResult> PutChangeUsername([FromRoute] Guid id, [FromBody] UpdateUserViewModel userViewModel)
+		public async Task<IActionResult> Put([FromRoute] Guid id, [FromBody] UpdateUserViewModel userViewModel)
 		{
 			if (!ModelState.IsValid)
 				return BadRequest();

@@ -61,11 +61,11 @@ namespace ControllerPenalCodes.Controllers
 
 		[HttpGet]
 		[Route("{id}")]
-		public async Task<IActionResult> GetById([FromRoute] Guid id)
+		public async Task<IActionResult> Get([FromRoute] Guid id)
 		{
 			try
 			{
-				var response = await _statusService.GetById(id);
+				var response = await _statusService.Get(id);
 
 				if (response.Ok)
 					return Ok(response.Return);

@@ -49,24 +49,12 @@ namespace ControllerPenalCodes.Services
 			return Response<IEnumerable<GetStatusViewModel>>.ResponseService(true, statusViewModelList);
 		}
 
-		public async Task<Response<GetStatusViewModel>> GetById(Guid statusId)
+		public async Task<Response<GetStatusViewModel>> Get(Guid statusId)
 		{
 			if (statusId == Guid.Empty)
 				return Response<GetStatusViewModel>.ResponseService(false, "The 'statusId' informed is zeroed.");
 
 			var status = await _statusRepository.GetById(statusId);
-
-			if (status == null)
-				return Response<GetStatusViewModel>.ResponseService(false);
-
-			var statusViewModel = StatusMapper.EntityToViewModel(status);
-
-			return Response<GetStatusViewModel>.ResponseService(true, statusViewModel);
-		}
-
-		public async Task<Response<GetStatusViewModel>> GetByName(string statusName)
-		{
-			var status = await _statusRepository.GetByName(statusName);
 
 			if (status == null)
 				return Response<GetStatusViewModel>.ResponseService(false);

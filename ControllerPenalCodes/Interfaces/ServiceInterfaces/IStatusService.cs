@@ -13,9 +13,7 @@ namespace ControllerPenalCodes.Interfaces.ServiceInterfaces
 
 		Task<Response<IEnumerable<GetStatusViewModel>>> GetAll();
 
-		Task<Response<GetStatusViewModel>> GetById(Guid statusId);
-
-		Task<Response<GetStatusViewModel>> GetByName(string statusName);
+		Task<Response<GetStatusViewModel>> Get(Guid statusId);
 
 		Task<Response<Status>> Update(Guid statusId, UpdateStatusViewModel newStatusViewModel);
 
