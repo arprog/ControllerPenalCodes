@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using ControllerPenalCodes.Models.Entities;
 using ControllerPenalCodes.Interfaces.RepositoryInterfaces;
@@ -63,16 +62,16 @@ namespace ControllerPenalCodes.Services
 			return Response<GetCreatedCriminalCodeViewModel>.ResponseService(true, $"api/v1/criminal-codes/{createdCriminalCodeViewModel.Id}", createdCriminalCodeViewModel);
 		}
 
-		public async Task<Response<IEnumerable<GetGenericCriminalCodeViewModel>>> GetAll()
+		public async Task<Response<Pagination<GetGenericCriminalCodeViewModel>>> GetAll(int page, int itemsByPage)
 		{
-			var criminalCodeList = await _criminalCodeRepository.GetAll();
+			var criminalCodeList = await _criminalCodeRepository.GetAll(page, itemsByPage);
 				
 			if (criminalCodeList == null)
-				return Response<IEnumerable<GetGenericCriminalCodeViewModel>>.ResponseService(false);
+				return Response<Pagination<GetGenericCriminalCodeViewModel>>.ResponseService(false);
 
-			var criminalCodeViewModelList = CriminalCodeMapper.EntityListToGenericViewModelList(criminalCodeList);
+			var criminalCodeViewModelList = CriminalCodeMapper.EntityListToGenericViewModelListPaginated(await _criminalCodeRepository.GetAmountCriminalCodes(), itemsByPage, page, criminalCodeList);
 
-			return Response<IEnumerable<GetGenericCriminalCodeViewModel>>.ResponseService(true, criminalCodeViewModelList);
+			return Response<Pagination<GetGenericCriminalCodeViewModel>>.ResponseService(true, criminalCodeViewModelList);
 		}
 
 		public async Task<Response<GetUniqueCriminalCodeViewModel>> Get(Guid criminalCodeId)

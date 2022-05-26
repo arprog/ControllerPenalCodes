@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using System.Threading.Tasks;
 using ControllerPenalCodes.Interfaces.ServiceInterfaces;
 using ControllerPenalCodes.Models.ViewModels.CriminalCodeViewModels;
@@ -49,11 +48,16 @@ namespace ControllerPenalCodes.Controllers
 		}
 
 		[HttpGet]
-		public async Task<IActionResult> GetAll()
+		public async Task<IActionResult> GetAll(
+			[FromQuery] int page = 1,
+			[FromQuery] int itemsByPage = 25)
 		{
 			try
 			{
-				var response = await _criminalCodeService.GetAll();
+				page = (page <= 0) ? 1 : page;
+				itemsByPage = (itemsByPage <= 0 || itemsByPage > 100) ? 25 : itemsByPage;
+
+				var response = await _criminalCodeService.GetAll(page, itemsByPage);
 
 				return response.Ok ? Ok(response.Return) : NoContent();
 			}

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using ControllerPenalCodes.Models.Entities;
 using ControllerPenalCodes.Interfaces.RepositoryInterfaces;
@@ -37,16 +36,16 @@ namespace ControllerPenalCodes.Services
 			return Response<Status>.ResponseService(true, $"api/v1/status/{status.Id}", status);
 		}
 
-		public async Task<Response<IEnumerable<GetStatusViewModel>>> GetAll()
+		public async Task<Response<Pagination<GetStatusViewModel>>> GetAll(int page, int itemsByPage)
 		{
-			var statusList = await _statusRepository.GetAll();
+			var statusList = await _statusRepository.GetAll(page, itemsByPage);
 
 			if (statusList == null)
-				return Response<IEnumerable<GetStatusViewModel>>.ResponseService(false);
+				return Response<Pagination<GetStatusViewModel>>.ResponseService(false);
 
-			var statusViewModelList = StatusMapper.EntityListToViewModelList(statusList);
+			var statusViewModelList = StatusMapper.EntityListToViewModelListPaginated(await _statusRepository.GetAmountStatus(), itemsByPage, page, statusList);
 
-			return Response<IEnumerable<GetStatusViewModel>>.ResponseService(true, statusViewModelList);
+			return Response<Pagination<GetStatusViewModel>>.ResponseService(true, statusViewModelList);
 		}
 
 		public async Task<Response<GetStatusViewModel>> Get(Guid statusId)

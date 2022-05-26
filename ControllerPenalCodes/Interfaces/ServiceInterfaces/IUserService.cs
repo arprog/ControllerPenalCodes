@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using ControllerPenalCodes.Models.Entities;
 using ControllerPenalCodes.Models.ViewModels.UserViewModels;
@@ -11,7 +10,7 @@ namespace ControllerPenalCodes.Interfaces.ServiceInterfaces
 	{
 		Task<Response<GetUserViewModel>> Create(CreateUserViewModel userViewModel);
 
-		Task<Response<IEnumerable<GetUserViewModel>>> GetAll();
+		Task<Response<Pagination<GetUserViewModel>>> GetAll(int page, int itemsByPage);
 
 		Task<Response<GetUserViewModel>> Get(Guid userId);
 

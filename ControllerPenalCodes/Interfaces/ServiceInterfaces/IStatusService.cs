@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using ControllerPenalCodes.Models.Entities;
 using ControllerPenalCodes.Models.ViewModels.StatusViewModels;
@@ -11,7 +10,7 @@ namespace ControllerPenalCodes.Interfaces.ServiceInterfaces
 	{
 		Task<Response<Status>> Create(CreateStatusViewModel statusViewModel);
 
-		Task<Response<IEnumerable<GetStatusViewModel>>> GetAll();
+		Task<Response<Pagination<GetStatusViewModel>>> GetAll(int page, int itemsByPage);
 
 		Task<Response<GetStatusViewModel>> Get(Guid statusId);
 

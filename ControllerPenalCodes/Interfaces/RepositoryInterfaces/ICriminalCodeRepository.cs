@@ -9,13 +9,15 @@ namespace ControllerPenalCodes.Interfaces.RepositoryInterfaces
 	{
 		Task Add(CriminalCode criminalCode);
 
-		Task<IEnumerable<CriminalCode>> GetAll();
+		Task<IEnumerable<CriminalCode>> GetAll(int page, int itemsByPage);
 
 		Task<CriminalCode> GetOtherCriminalCodeByName(Guid criminalCodeId, string criminalCodeName);
 
 		Task<CriminalCode> GetById(Guid criminalCodeId);
 
 		Task<CriminalCode> GetByName(string criminalCodeName);
+
+		Task<int> GetAmountCriminalCodes();
 
 		Task Update(CriminalCode criminalCode);
 

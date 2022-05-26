@@ -9,13 +9,15 @@ namespace ControllerPenalCodes.Interfaces.RepositoryInterfaces
 	{
 		Task Add(Status status);
 
-		Task<IEnumerable<Status>> GetAll();
+		Task<IEnumerable<Status>> GetAll(int page, int itemsByPage);
 
 		Task<Status> GetOtherStatusByName(Guid statusId, string statusName);
 
 		Task<Status> GetById(Guid statusId);
 
 		Task<Status> GetByName(string statusName);
+
+		Task<int> GetAmountStatus();
 
 		Task Update(Status status);
 

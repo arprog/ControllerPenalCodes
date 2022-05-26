@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using ControllerPenalCodes.Models.Entities;
 using ControllerPenalCodes.Interfaces.RepositoryInterfaces;
@@ -40,16 +39,16 @@ namespace ControllerPenalCodes.Services
 			return Response<GetUserViewModel>.ResponseService(true, $"api/v1/users/{createdUserViewModel.Id}", createdUserViewModel);
 		}
 
-		public async Task<Response<IEnumerable<GetUserViewModel>>> GetAll()
+		public async Task<Response<Pagination<GetUserViewModel>>> GetAll(int page, int itemsByPage)
 		{
-			var userList = await _userRepository.GetAll();
+			var userList = await _userRepository.GetAll(page, itemsByPage);
 
 			if (userList == null)
-				return Response<IEnumerable<GetUserViewModel>>.ResponseService(false);
+				return Response<Pagination<GetUserViewModel>>.ResponseService(false);
 
-			var userViewModelList = UserMapper.EntityListToViewModelList(userList);
+			var userViewModelList = UserMapper.EntityListToViewModelListPaginated(await _userRepository.GetAmountUsers(), itemsByPage, page, userList);
 
-			return Response<IEnumerable<GetUserViewModel>>.ResponseService(true, userViewModelList);
+			return Response<Pagination<GetUserViewModel>>.ResponseService(true, userViewModelList);
 		}
 
 		public async Task<Response<GetUserViewModel>> Get(Guid userId)

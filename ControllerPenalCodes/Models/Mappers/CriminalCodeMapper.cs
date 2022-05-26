@@ -2,6 +2,7 @@
 using System.Linq;
 using ControllerPenalCodes.Models.Entities;
 using ControllerPenalCodes.Models.ViewModels.CriminalCodeViewModels;
+using ControllerPenalCodes.Shared;
 
 namespace ControllerPenalCodes.Models.Mappers
 {
@@ -53,12 +54,18 @@ namespace ControllerPenalCodes.Models.Mappers
 			};
 		}
 
-		public static IEnumerable<GetGenericCriminalCodeViewModel> EntityListToGenericViewModelList(IEnumerable<CriminalCode> criminalCodeList)
+		public static Pagination<GetGenericCriminalCodeViewModel> EntityListToGenericViewModelListPaginated(
+			int totalItems,
+			int amountItemsByPage,
+			int currentPage,
+			IEnumerable<CriminalCode> criminalCodeList)
 		{
 			if (criminalCodeList == null || criminalCodeList.Count() == 0)
 				return null;
 
-			return criminalCodeList.Select(criminalCode => EntityToGenericViewModel(criminalCode));
+			var criminalCodeViewModelList = criminalCodeList.Select(criminalCode => EntityToGenericViewModel(criminalCode));
+
+			return Pagination<GetGenericCriminalCodeViewModel>.GetPagination(totalItems, amountItemsByPage, currentPage, criminalCodeViewModelList);
 		}
 	}
 }

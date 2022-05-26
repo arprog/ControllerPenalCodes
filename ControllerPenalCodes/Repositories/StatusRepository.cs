@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using ControllerPenalCodes.Models.Entities;
 using Microsoft.EntityFrameworkCore;
 using ControllerPenalCodes.Interfaces.RepositoryInterfaces;
+using ControllerPenalCodes.Shared;
 
 namespace ControllerPenalCodes.Repositories
 {
@@ -25,11 +26,18 @@ namespace ControllerPenalCodes.Repositories
 				.SaveChangesAsync();
 		}
 
-		public async Task<IEnumerable<Status>> GetAll()
+		public async Task<IEnumerable<Status>> GetAll(int page, int itemsByPage)
 		{
-			return await _dbContext.Status
-				.AsNoTracking()
+			var statusQuery = _dbContext.Status
+				.AsNoTracking();
+
+			int totalItems = await GetAmountStatus();
+
+			var status = await Pagination<Status>
+				.PaginateQuery(page, itemsByPage, totalItems, statusQuery)
 				.ToListAsync();
+
+			return status;
 		}
 
 		public async Task<Status> GetOtherStatusByName(Guid statusId, string statusName)
@@ -52,6 +60,11 @@ namespace ControllerPenalCodes.Repositories
 			return await _dbContext.Status
 				.AsNoTracking()
 				.FirstOrDefaultAsync(status => status.Name.ToLower() == statusName.ToLower());
+		}
+
+		public async Task<int> GetAmountStatus()
+		{
+			return await _dbContext.Status.CountAsync();
 		}
 
 		public async Task Update(Status status)

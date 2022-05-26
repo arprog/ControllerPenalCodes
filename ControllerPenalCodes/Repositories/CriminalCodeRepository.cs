@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using ControllerPenalCodes.Interfaces.RepositoryInterfaces;
 using ControllerPenalCodes.Models.Entities;
+using ControllerPenalCodes.Shared;
 using Microsoft.EntityFrameworkCore;
 
 namespace ControllerPenalCodes.Repositories
@@ -25,14 +26,21 @@ namespace ControllerPenalCodes.Repositories
 				.SaveChangesAsync();
 		}
 
-		public async Task<IEnumerable<CriminalCode>> GetAll()
+		public async Task<IEnumerable<CriminalCode>> GetAll(int page, int itemsByPage)
 		{
-			return await _dbContext.CriminalCodes
+			var criminalCodesQuery = _dbContext.CriminalCodes
 				.AsNoTracking()
 				.Include(criminalCode => criminalCode.Status)
 				.Include(criminalCode => criminalCode.CreateUser)
-				.Include(criminalCode => criminalCode.UpdateUser)
+				.Include(criminalCode => criminalCode.UpdateUser);
+
+			int totalItems = await GetAmountCriminalCodes();
+
+			var criminalCodes = await Pagination<CriminalCode>
+				.PaginateQuery(page, itemsByPage, totalItems, criminalCodesQuery)
 				.ToListAsync();
+
+			return criminalCodes;
 		}
 
 		public async Task<CriminalCode> GetOtherCriminalCodeByName(Guid criminalCodeId, string criminalCodeName)
@@ -64,6 +72,11 @@ namespace ControllerPenalCodes.Repositories
 				.Include(criminalCode => criminalCode.CreateUser)
 				.Include(criminalCode => criminalCode.UpdateUser)
 				.FirstOrDefaultAsync(criminalCode => criminalCode.Name.ToLower() == criminalCodeName.ToLower());
+		}
+
+		public async Task<int> GetAmountCriminalCodes()
+		{
+			return await _dbContext.CriminalCodes.CountAsync();
 		}
 
 		public async Task Update(CriminalCode criminalCode)

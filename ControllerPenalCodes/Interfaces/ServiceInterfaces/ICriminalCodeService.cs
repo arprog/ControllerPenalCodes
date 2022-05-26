@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using ControllerPenalCodes.Models.Entities;
 using ControllerPenalCodes.Models.ViewModels.CriminalCodeViewModels;
@@ -11,7 +10,7 @@ namespace ControllerPenalCodes.Interfaces.ServiceInterfaces
 	{
 		Task<Response<GetCreatedCriminalCodeViewModel>> Create(string creatingUserId, CreateCriminalCodeViewModel criminalCodeViewModel);
 
-		Task<Response<IEnumerable<GetGenericCriminalCodeViewModel>>> GetAll();
+		Task<Response<Pagination<GetGenericCriminalCodeViewModel>>> GetAll(int page, int itemsByPage);
 
 		Task<Response<GetUniqueCriminalCodeViewModel>> Get(Guid criminalCodeId);
 

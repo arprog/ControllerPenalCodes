@@ -2,6 +2,7 @@
 using System.Linq;
 using ControllerPenalCodes.Models.Entities;
 using ControllerPenalCodes.Models.ViewModels.UserViewModels;
+using ControllerPenalCodes.Shared;
 
 namespace ControllerPenalCodes.Models.Mappers
 {
@@ -16,12 +17,18 @@ namespace ControllerPenalCodes.Models.Mappers
 			};
 		}
 
-		public static IEnumerable<GetUserViewModel> EntityListToViewModelList(IEnumerable<User> userList)
+		public static Pagination<GetUserViewModel> EntityListToViewModelListPaginated(
+			int totalItems,
+			int amountItemsByPage,
+			int currentPage,
+			IEnumerable<User> userList)
 		{
 			if (userList == null || userList.Count() == 0)
 				return null;
 
-			return userList.Select(user => EntityToViewModel(user));
+			var userViewModelList = userList.Select(user => EntityToViewModel(user));
+
+			return Pagination<GetUserViewModel>.GetPagination(totalItems, amountItemsByPage, currentPage, userViewModelList);
 		}
 	}
 }
