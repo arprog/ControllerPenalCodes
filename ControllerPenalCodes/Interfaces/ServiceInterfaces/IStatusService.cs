@@ -10,7 +10,7 @@ namespace ControllerPenalCodes.Interfaces.ServiceInterfaces
 	{
 		Task<Response<Status>> Create(CreateStatusViewModel statusViewModel);
 
-		Task<Response<Pagination<GetStatusViewModel>>> GetAll(int page, int itemsByPage);
+		Task<Response<Pagination<GetStatusViewModel>>> GetAll(FilterStatusViewModel statusViewModel, int page, int itemsByPage);
 
 		Task<Response<GetStatusViewModel>> Get(Guid statusId);
 

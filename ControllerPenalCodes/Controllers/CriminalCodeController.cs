@@ -49,6 +49,7 @@ namespace ControllerPenalCodes.Controllers
 
 		[HttpGet]
 		public async Task<IActionResult> GetAll(
+			[FromBody] FilterCriminalCodeViewModel criminalCodeViewModel,
 			[FromQuery] int page = 1,
 			[FromQuery] int itemsByPage = 25)
 		{
@@ -57,7 +58,7 @@ namespace ControllerPenalCodes.Controllers
 				page = (page <= 0) ? 1 : page;
 				itemsByPage = (itemsByPage <= 0 || itemsByPage > 100) ? 25 : itemsByPage;
 
-				var response = await _criminalCodeService.GetAll(page, itemsByPage);
+				var response = await _criminalCodeService.GetAll(criminalCodeViewModel, page, itemsByPage);
 
 				return response.Ok ? Ok(response.Return) : NoContent();
 			}

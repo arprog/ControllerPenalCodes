@@ -36,9 +36,9 @@ namespace ControllerPenalCodes.Services
 			return Response<Status>.ResponseService(true, $"api/v1/status/{status.Id}", status);
 		}
 
-		public async Task<Response<Pagination<GetStatusViewModel>>> GetAll(int page, int itemsByPage)
+		public async Task<Response<Pagination<GetStatusViewModel>>> GetAll(FilterStatusViewModel statusViewModel, int page, int itemsByPage)
 		{
-			var statusList = await _statusRepository.GetAll(page, itemsByPage);
+			var statusList = await _statusRepository.GetAll(statusViewModel, page, itemsByPage);
 
 			if (statusList == null)
 				return Response<Pagination<GetStatusViewModel>>.ResponseService(false);

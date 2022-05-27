@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using ControllerPenalCodes.Models.Entities;
+using ControllerPenalCodes.Models.ViewModels.StatusViewModels;
 
 namespace ControllerPenalCodes.Interfaces.RepositoryInterfaces
 {
@@ -9,7 +10,7 @@ namespace ControllerPenalCodes.Interfaces.RepositoryInterfaces
 	{
 		Task Add(Status status);
 
-		Task<IEnumerable<Status>> GetAll(int page, int itemsByPage);
+		Task<IEnumerable<Status>> GetAll(FilterStatusViewModel statusViewModel, int page, int itemsByPage);
 
 		Task<Status> GetOtherStatusByName(Guid statusId, string statusName);
 

@@ -39,9 +39,9 @@ namespace ControllerPenalCodes.Services
 			return Response<GetUserViewModel>.ResponseService(true, $"api/v1/users/{createdUserViewModel.Id}", createdUserViewModel);
 		}
 
-		public async Task<Response<Pagination<GetUserViewModel>>> GetAll(int page, int itemsByPage)
+		public async Task<Response<Pagination<GetUserViewModel>>> GetAll(FilterUserViewModel userViewModel, int page, int itemsByPage)
 		{
-			var userList = await _userRepository.GetAll(page, itemsByPage);
+			var userList = await _userRepository.GetAll(userViewModel, page, itemsByPage);
 
 			if (userList == null)
 				return Response<Pagination<GetUserViewModel>>.ResponseService(false);

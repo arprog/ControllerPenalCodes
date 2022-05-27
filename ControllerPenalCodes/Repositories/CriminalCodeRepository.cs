@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using ControllerPenalCodes.Interfaces.RepositoryInterfaces;
 using ControllerPenalCodes.Models.Entities;
+using ControllerPenalCodes.Models.ViewModels.CriminalCodeViewModels;
 using ControllerPenalCodes.Shared;
 using Microsoft.EntityFrameworkCore;
 
@@ -26,13 +28,74 @@ namespace ControllerPenalCodes.Repositories
 				.SaveChangesAsync();
 		}
 
-		public async Task<IEnumerable<CriminalCode>> GetAll(int page, int itemsByPage)
+		public async Task<IEnumerable<CriminalCode>> GetAll(FilterCriminalCodeViewModel criminalCodeViewModel, int page, int itemsByPage)
 		{
 			var criminalCodesQuery = _dbContext.CriminalCodes
 				.AsNoTracking()
 				.Include(criminalCode => criminalCode.Status)
 				.Include(criminalCode => criminalCode.CreateUser)
-				.Include(criminalCode => criminalCode.UpdateUser);
+				.Include(criminalCode => criminalCode.UpdateUser)
+				.AsQueryable();
+
+			if (!string.IsNullOrEmpty(criminalCodeViewModel.Id))
+			{
+				criminalCodesQuery = criminalCodesQuery
+					.Where(criminalCode => criminalCode.Id.ToString().Contains(criminalCodeViewModel.Id.ToLower()));
+			}
+
+			if (!string.IsNullOrEmpty(criminalCodeViewModel.Name))
+			{
+				criminalCodesQuery = criminalCodesQuery
+					.Where(criminalCode => criminalCode.Name.ToLower().Contains(criminalCodeViewModel.Name.ToLower()));
+			}
+
+			if (!string.IsNullOrEmpty(criminalCodeViewModel.Description))
+			{
+				criminalCodesQuery = criminalCodesQuery
+					.Where(criminalCode => criminalCode.Description.ToLower().Contains(criminalCodeViewModel.Description.ToLower()));
+			}
+
+			if (criminalCodeViewModel.Penalty != null)
+			{
+				criminalCodesQuery = criminalCodesQuery
+					.Where(criminalCode => criminalCode.Penalty == criminalCodeViewModel.Penalty);
+			}
+
+			if (criminalCodeViewModel.PrisionTime != null)
+			{
+				criminalCodesQuery = criminalCodesQuery
+					.Where(criminalCode => criminalCode.PrisionTime == criminalCodeViewModel.PrisionTime);
+			}
+
+			if (!string.IsNullOrEmpty(criminalCodeViewModel.StatusId))
+			{
+				criminalCodesQuery = criminalCodesQuery
+					.Where(criminalCode => criminalCode.StatusId.ToString().Contains(criminalCodeViewModel.StatusId.ToLower()));
+			}
+
+			if (criminalCodeViewModel.CreateDate != null)
+			{
+				criminalCodesQuery = criminalCodesQuery
+					.Where(criminalCode => criminalCode.CreateDate == criminalCodeViewModel.CreateDate);
+			}
+
+			if (criminalCodeViewModel.UpdateDate != null)
+			{
+				criminalCodesQuery = criminalCodesQuery
+					.Where(criminalCode => criminalCode.UpdateDate == criminalCodeViewModel.UpdateDate);
+			}
+
+			if (!string.IsNullOrEmpty(criminalCodeViewModel.CreateUserId))
+			{
+				criminalCodesQuery = criminalCodesQuery
+					.Where(criminalCode => criminalCode.CreateUserId.ToString().Contains(criminalCodeViewModel.CreateUserId.ToLower()));
+			}
+
+			if (!string.IsNullOrEmpty(criminalCodeViewModel.UpdateUserId))
+			{
+				criminalCodesQuery = criminalCodesQuery
+					.Where(criminalCode => criminalCode.UpdateUserId.ToString().Contains(criminalCodeViewModel.UpdateUserId.ToLower()));
+			}
 
 			int totalItems = await GetAmountCriminalCodes();
 

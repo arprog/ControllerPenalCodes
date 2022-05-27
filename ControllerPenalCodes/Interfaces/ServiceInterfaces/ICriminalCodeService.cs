@@ -10,7 +10,7 @@ namespace ControllerPenalCodes.Interfaces.ServiceInterfaces
 	{
 		Task<Response<GetCreatedCriminalCodeViewModel>> Create(string creatingUserId, CreateCriminalCodeViewModel criminalCodeViewModel);
 
-		Task<Response<Pagination<GetGenericCriminalCodeViewModel>>> GetAll(int page, int itemsByPage);
+		Task<Response<Pagination<GetGenericCriminalCodeViewModel>>> GetAll(FilterCriminalCodeViewModel criminalCodeViewModel, int page, int itemsByPage);
 
 		Task<Response<GetUniqueCriminalCodeViewModel>> Get(Guid criminalCodeId);
 
