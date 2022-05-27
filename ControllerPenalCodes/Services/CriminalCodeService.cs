@@ -62,10 +62,23 @@ namespace ControllerPenalCodes.Services
 			return Response<GetCreatedCriminalCodeViewModel>.ResponseService(true, $"api/v1/criminal-codes/{createdCriminalCodeViewModel.Id}", createdCriminalCodeViewModel);
 		}
 
-		public async Task<Response<Pagination<GetGenericCriminalCodeViewModel>>> GetAll(FilterCriminalCodeViewModel criminalCodeViewModel, int page, int itemsByPage)
+		public async Task<Response<Pagination<GetGenericCriminalCodeViewModel>>> GetAll(
+			string id,
+			string name,
+			string description,
+			decimal? penalty,
+			int? prisionTime,
+			string statusId,
+			DateTime? createDate,
+			DateTime? updateDate,
+			string createUserId,
+			string updateUserId,
+			int page,
+			int itemsByPage)
 		{
-			var criminalCodeList = await _criminalCodeRepository.GetAll(criminalCodeViewModel, page, itemsByPage);
-				
+			var criminalCodeList = await _criminalCodeRepository
+				.GetAll(id, name, description, penalty, prisionTime, statusId, createDate, updateDate, createUserId, updateUserId, page, itemsByPage);
+
 			if (criminalCodeList == null)
 				return Response<Pagination<GetGenericCriminalCodeViewModel>>.ResponseService(false);
 

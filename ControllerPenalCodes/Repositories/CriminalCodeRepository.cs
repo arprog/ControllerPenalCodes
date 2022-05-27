@@ -4,7 +4,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using ControllerPenalCodes.Interfaces.RepositoryInterfaces;
 using ControllerPenalCodes.Models.Entities;
-using ControllerPenalCodes.Models.ViewModels.CriminalCodeViewModels;
 using ControllerPenalCodes.Shared;
 using Microsoft.EntityFrameworkCore;
 
@@ -28,7 +27,19 @@ namespace ControllerPenalCodes.Repositories
 				.SaveChangesAsync();
 		}
 
-		public async Task<IEnumerable<CriminalCode>> GetAll(FilterCriminalCodeViewModel criminalCodeViewModel, int page, int itemsByPage)
+		public async Task<IEnumerable<CriminalCode>> GetAll(
+			string id,
+			string name,
+			string description,
+			decimal? penalty,
+			int? prisionTime,
+			string statusId,
+			DateTime? createDate,
+			DateTime? updateDate,
+			string createUserId,
+			string updateUserId,
+			int page,
+			int itemsByPage)
 		{
 			var criminalCodesQuery = _dbContext.CriminalCodes
 				.AsNoTracking()
@@ -37,64 +48,64 @@ namespace ControllerPenalCodes.Repositories
 				.Include(criminalCode => criminalCode.UpdateUser)
 				.AsQueryable();
 
-			if (!string.IsNullOrEmpty(criminalCodeViewModel.Id))
+			if (!string.IsNullOrEmpty(id))
 			{
 				criminalCodesQuery = criminalCodesQuery
-					.Where(criminalCode => criminalCode.Id.ToString().Contains(criminalCodeViewModel.Id.ToLower()));
+					.Where(criminalCode => criminalCode.Id.ToString().Contains(id.ToLower()));
 			}
 
-			if (!string.IsNullOrEmpty(criminalCodeViewModel.Name))
+			if (!string.IsNullOrEmpty(name))
 			{
 				criminalCodesQuery = criminalCodesQuery
-					.Where(criminalCode => criminalCode.Name.ToLower().Contains(criminalCodeViewModel.Name.ToLower()));
+					.Where(criminalCode => criminalCode.Name.ToLower().Contains(name.ToLower()));
 			}
 
-			if (!string.IsNullOrEmpty(criminalCodeViewModel.Description))
+			if (!string.IsNullOrEmpty(description))
 			{
 				criminalCodesQuery = criminalCodesQuery
-					.Where(criminalCode => criminalCode.Description.ToLower().Contains(criminalCodeViewModel.Description.ToLower()));
+					.Where(criminalCode => criminalCode.Description.ToLower().Contains(description.ToLower()));
 			}
 
-			if (criminalCodeViewModel.Penalty != null)
+			if (penalty != null)
 			{
 				criminalCodesQuery = criminalCodesQuery
-					.Where(criminalCode => criminalCode.Penalty == criminalCodeViewModel.Penalty);
+					.Where(criminalCode => criminalCode.Penalty == penalty);
 			}
 
-			if (criminalCodeViewModel.PrisionTime != null)
+			if (prisionTime != null)
 			{
 				criminalCodesQuery = criminalCodesQuery
-					.Where(criminalCode => criminalCode.PrisionTime == criminalCodeViewModel.PrisionTime);
+					.Where(criminalCode => criminalCode.PrisionTime == prisionTime);
 			}
 
-			if (!string.IsNullOrEmpty(criminalCodeViewModel.StatusId))
+			if (!string.IsNullOrEmpty(statusId))
 			{
 				criminalCodesQuery = criminalCodesQuery
-					.Where(criminalCode => criminalCode.StatusId.ToString().Contains(criminalCodeViewModel.StatusId.ToLower()));
+					.Where(criminalCode => criminalCode.StatusId.ToString().Contains(statusId.ToLower()));
 			}
 
-			if (criminalCodeViewModel.CreateDate != null)
+			if (createDate != null)
 			{
 				criminalCodesQuery = criminalCodesQuery
-					.Where(criminalCode => criminalCode.CreateDate == criminalCodeViewModel.CreateDate);
+					.Where(criminalCode => criminalCode.CreateDate == createDate);
 			}
 
-			if (criminalCodeViewModel.UpdateDate != null)
+			if (updateDate != null)
 			{
 				criminalCodesQuery = criminalCodesQuery
-					.Where(criminalCode => criminalCode.UpdateDate == criminalCodeViewModel.UpdateDate);
+					.Where(criminalCode => criminalCode.UpdateDate == updateDate);
 			}
 
-			if (!string.IsNullOrEmpty(criminalCodeViewModel.CreateUserId))
+			if (!string.IsNullOrEmpty(createUserId))
 			{
 				criminalCodesQuery = criminalCodesQuery
-					.Where(criminalCode => criminalCode.CreateUserId.ToString().Contains(criminalCodeViewModel.CreateUserId.ToLower()));
+					.Where(criminalCode => criminalCode.CreateUserId.ToString().Contains(createUserId.ToLower()));
 			}
 
-			if (!string.IsNullOrEmpty(criminalCodeViewModel.UpdateUserId))
+			if (!string.IsNullOrEmpty(updateUserId))
 			{
 				criminalCodesQuery = criminalCodesQuery
-					.Where(criminalCode => criminalCode.UpdateUserId.ToString().Contains(criminalCodeViewModel.UpdateUserId.ToLower()));
+					.Where(criminalCode => criminalCode.UpdateUserId.ToString().Contains(updateUserId.ToLower()));
 			}
 
 			int totalItems = await GetAmountCriminalCodes();

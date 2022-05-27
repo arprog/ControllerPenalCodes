@@ -5,7 +5,6 @@ using ControllerPenalCodes.Models.Entities;
 using Microsoft.EntityFrameworkCore;
 using ControllerPenalCodes.Interfaces.RepositoryInterfaces;
 using ControllerPenalCodes.Shared;
-using ControllerPenalCodes.Models.ViewModels.UserViewModels;
 using System.Linq;
 
 namespace ControllerPenalCodes.Repositories
@@ -28,21 +27,21 @@ namespace ControllerPenalCodes.Repositories
 				.SaveChangesAsync();
 		}
 
-		public async Task<IEnumerable<User>> GetAll(FilterUserViewModel userViewModel, int page, int itemsByPage)
+		public async Task<IEnumerable<User>> GetAll(string id, string username, int page, int itemsByPage)
 		{
 			var usersQuery = _dbContext.Users
 				.AsNoTracking();
 
-			if (!string.IsNullOrEmpty(userViewModel.Id))
+			if (!string.IsNullOrEmpty(id))
 			{
 				usersQuery = usersQuery
-					.Where(user => user.Id.ToString().Contains(userViewModel.Id.ToLower()));
+					.Where(user => user.Id.ToString().Contains(id.ToLower()));
 			}
 
-			if (!string.IsNullOrEmpty(userViewModel.Username))
+			if (!string.IsNullOrEmpty(username))
 			{
 				usersQuery = usersQuery
-					.Where(user => user.UserName.ToLower().Contains(userViewModel.Username.ToLower()));
+					.Where(user => user.UserName.ToLower().Contains(username.ToLower()));
 			}
 
 			int totalItems = await GetAmountUsers();

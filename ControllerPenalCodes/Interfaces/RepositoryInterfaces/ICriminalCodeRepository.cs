@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using ControllerPenalCodes.Models.Entities;
-using ControllerPenalCodes.Models.ViewModels.CriminalCodeViewModels;
 
 namespace ControllerPenalCodes.Interfaces.RepositoryInterfaces
 {
@@ -10,7 +9,19 @@ namespace ControllerPenalCodes.Interfaces.RepositoryInterfaces
 	{
 		Task Add(CriminalCode criminalCode);
 
-		Task<IEnumerable<CriminalCode>> GetAll(FilterCriminalCodeViewModel criminalCodeViewModel, int page, int itemsByPage);
+		Task<IEnumerable<CriminalCode>> GetAll(
+			string id,
+			string name,
+			string description,
+			decimal? penalty,
+			int? prisionTime,
+			string statusId,
+			DateTime? createDate,
+			DateTime? updateDate,
+			string createUserId,
+			string updateUserId,
+			int page,
+			int itemsByPage);
 
 		Task<CriminalCode> GetOtherCriminalCodeByName(Guid criminalCodeId, string criminalCodeName);
 

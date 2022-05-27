@@ -5,7 +5,6 @@ using ControllerPenalCodes.Models.Entities;
 using Microsoft.EntityFrameworkCore;
 using ControllerPenalCodes.Interfaces.RepositoryInterfaces;
 using ControllerPenalCodes.Shared;
-using ControllerPenalCodes.Models.ViewModels.StatusViewModels;
 using System.Linq;
 
 namespace ControllerPenalCodes.Repositories
@@ -28,21 +27,21 @@ namespace ControllerPenalCodes.Repositories
 				.SaveChangesAsync();
 		}
 
-		public async Task<IEnumerable<Status>> GetAll(FilterStatusViewModel statusViewModel, int page, int itemsByPage)
+		public async Task<IEnumerable<Status>> GetAll(string id, string name, int page, int itemsByPage)
 		{
 			var statusQuery = _dbContext.Status
 				.AsNoTracking();
 
-			if (!string.IsNullOrEmpty(statusViewModel.Id))
+			if (!string.IsNullOrEmpty(id))
 			{
 				statusQuery = statusQuery
-					.Where(status => status.Id.ToString().Contains(statusViewModel.Id.ToLower()));
+					.Where(status => status.Id.ToString().Contains(id.ToLower()));
 			}
 
-			if (!string.IsNullOrEmpty(statusViewModel.Name))
+			if (!string.IsNullOrEmpty(name))
 			{
 				statusQuery = statusQuery
-					.Where(status => status.Name.ToLower().Contains(statusViewModel.Name.ToLower()));
+					.Where(status => status.Name.ToLower().Contains(name.ToLower()));
 			}
 
 			int totalItems = await GetAmountStatus();

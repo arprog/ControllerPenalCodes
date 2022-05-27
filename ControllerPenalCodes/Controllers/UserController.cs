@@ -46,7 +46,8 @@ namespace ControllerPenalCodes.Controllers
 
 		[HttpGet]
 		public async Task<IActionResult> GetAll(
-			[FromBody] FilterUserViewModel userViewModel,
+			[FromQuery] string id,
+			[FromQuery] string username,
 			[FromQuery] int page = 1,
 			[FromQuery] int itemsByPage = 25)
 		{
@@ -55,7 +56,7 @@ namespace ControllerPenalCodes.Controllers
 				page = (page <= 0) ? 1 : page;
 				itemsByPage = (itemsByPage <= 0 || itemsByPage > 100) ? 25 : itemsByPage;
 
-				var response = await _userService.GetAll(userViewModel, page, itemsByPage);
+				var response = await _userService.GetAll(id, username, page, itemsByPage);
 
 				return response.Ok ? Ok(response.Return) : NoContent();
 			}

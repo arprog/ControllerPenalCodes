@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using ControllerPenalCodes.Models.Entities;
-using ControllerPenalCodes.Models.ViewModels.UserViewModels;
 
 namespace ControllerPenalCodes.Interfaces.RepositoryInterfaces
 {
@@ -10,7 +9,7 @@ namespace ControllerPenalCodes.Interfaces.RepositoryInterfaces
 	{
 		Task Add(User user);
 
-		Task<IEnumerable<User>> GetAll(FilterUserViewModel userViewModel, int page, int itemsByPage);
+		Task<IEnumerable<User>> GetAll(string id, string username, int page, int itemsByPage);
 
 		Task<User> GetOtherUserByUsername(Guid userId, string username);
 
